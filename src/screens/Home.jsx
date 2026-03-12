@@ -7,17 +7,12 @@ import { RecipeCard, getMatchingRecipes } from "./Recipes";
 import LangToggle from "../components/LangToggle";
 
 export default function Home() {
-  const { fresh, warning, expired, fridgeItems, pantryZoneItems, pantryItems, categories } = useData();
+  const { fresh, warning, expired, fridgeItems, pantryZoneItems, pantryItems, categories, activity } = useData();
   const { t, lang } = useLang();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
 
   const expiringSoon = pantryItems.filter(i => i.status === "warning" || i.status === "expiring");
-  const activity = [
-    { id: 1, name: "Free-range Eggs", user: "Sarah", time: "2 hours ago", status: "added", emoji: "🥚" },
-    { id: 2, name: "Ground Coffee", user: "David", time: "Yesterday", status: "consumed", emoji: "☕" },
-    { id: 3, name: "Organic Milk", user: "", time: "3 hours ago", status: "expiring", emoji: "🥛" },
-  ];
 
   const matchingRecipes = getMatchingRecipes(pantryItems, categories);
 
@@ -131,6 +126,11 @@ export default function Home() {
       </div>
 
       <div className="activity-list">
+        {activity.length === 0 && (
+          <div style={{ padding: "16px", textAlign: "center", color: "var(--text-sub)", fontSize: "13px" }}>
+            {lang === "es" ? "Aún no hay actividad registrada." : "No activity yet."}
+          </div>
+        )}
         {activity.map(item => (
           <div key={item.id} className="activity-item">
             <div className="activity-emoji-wrap">

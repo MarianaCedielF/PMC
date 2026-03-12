@@ -38,6 +38,7 @@ export function DataProvider({ children }) {
   const [pantryItems, setPantryItems] = useState(initialPantryItems);
   const [shoppingList, setShoppingList] = useState(initialShoppingList);
   const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
+  const [activity, setActivity] = useState([]);
   const [notifications, setNotifications] = useState([
     { id: 1, type: "expiring", item: "Organic Whole Milk", msg: "Expires today! Use it for cereal or making a quick béchamel sauce.", time: "2h ago", section: "today", img: "🥛", actioned: false },
     { id: 2, type: "expired", item: "Greek Yogurt (500g)", msg: "Expired yesterday. Please check if it's still good or compost it.", time: "5h ago", section: "today", img: "🫙", actioned: false },
@@ -45,13 +46,18 @@ export function DataProvider({ children }) {
     { id: 4, type: "expiring", item: "Baby Spinach", msg: "Expiring in 2 days. Perfect for a morning smoothie!", time: "1d ago", section: "yesterday", img: "🥬", actioned: false },
   ]);
 
-  const addItem = (item) => setPantryItems(prev => [...prev, { ...item, id: Date.now() }]);
+  const addItem = (item) => {
+    const newItem = { ...item, id: Date.now() };
+    setPantryItems(prev => [...prev, newItem]);
+    logActivity(newItem, "added");
+  };
   const removeItem = (id) => setPantryItems(prev => prev.filter(i => i.id !== id));
   const consumeItem = (id, amount) => {
     setPantryItems(prev => prev.map(item => {
       if (item.id !== id) return item;
       const currentQty = parseInt(item.quantity) ?? 1;
       const newQty = currentQty - amount;
+      logActivity(item, "consumed");
       if (newQty <= 0) return { ...item, quantity: 0, status: "consumed" };
       return { ...item, quantity: newQty };
     }));
@@ -60,6 +66,16 @@ export function DataProvider({ children }) {
   const addShoppingItem = (name, cats = []) => setShoppingList(prev => [...prev, { id: Date.now(), name, categories: cats, addedBy: "Me", avatar: "ME", checked: false }]);
   const removeShoppingItem = (id) => setShoppingList(prev => prev.filter(i => i.id !== id));
   const actionNotification = (id) => setNotifications(prev => prev.filter(n => n.id !== id));
+  const logActivity = (item, status) => {
+    setActivity(prev => [{
+      id: Date.now(),
+      name: item.name,
+      user: "Me",
+      time: "Just now",
+      status,
+      emoji: item.img || "🛒",
+    }, ...prev].slice(0, 10));
+  };
   const addCategory = (cat) => setCategories(prev => [...prev, cat]);
 
   const fresh = pantryItems.filter(i => i.status === "fresh").length;
@@ -71,7 +87,7 @@ export function DataProvider({ children }) {
   return (
     <DataContext.Provider value={{
       pantryItems, shoppingList, notifications, categories,
-      addItem, removeItem, consumeItem, toggleShoppingItem, addShoppingItem, removeShoppingItem, actionNotification, addCategory,
+      addItem, removeItem, consumeItem, toggleShoppingItem, addShoppingItem, removeShoppingItem, actionNotification, addCategory, activity, logActivity,
       fresh, warning, expired, fridgeItems, pantryZoneItems
     }}>
       {children}
