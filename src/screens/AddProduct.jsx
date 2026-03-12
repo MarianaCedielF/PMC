@@ -177,7 +177,7 @@ export default function AddProduct() {
         <div className="form-row">
           <div className="form-field form-field-half">
             <label className="field-label">📅 {t("expiryDate")}</label>
-            <input className="field-input" type="date" value={form.expiryDate} onChange={e => setForm({ ...form, expiryDate: e.target.value })} />
+            <input className="field-input" type="date" value={form.expiryDate} min={new Date().toISOString().split("T")[0]} onChange={e => setForm({ ...form, expiryDate: e.target.value })} />
           </div>
           <div className="form-field form-field-half">
             <label className="field-label">🔢 {t("quantity")}</label>
