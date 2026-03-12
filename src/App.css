@@ -278,8 +278,8 @@ input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin
 .modal-remaining { text-align: center; font-size: 13px; color: var(--text-sub); margin-bottom: 20px; }
 .modal-actions { display: flex; gap: 10px; }
 
-.consume-btn-general { background: var(--green); color: white; border: none; border-radius: 10px; padding: 7px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.15s; }
-.consume-btn-general:hover { background: var(--green-dark); }
+.consume-btn-general { background: #fefce8; color: #854d0e; border: none; border-radius: 10px; padding: 7px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.15s; }
+.consume-btn-general:hover { background: #fef9c3; }
 .consume-product-list { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; margin-bottom: 4px; }
 .consume-product-option { display: flex; align-items: center; gap: 10px; background: #f8fffe; border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 12px; cursor: pointer; font-family: inherit; transition: all 0.15s; text-align: left; }
 .consume-product-option:hover { border-color: var(--green); background: var(--green-light); }
