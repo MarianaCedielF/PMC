@@ -1,4 +1,3 @@
-import { ArrowLeft, CheckCheck } from "lucide-react";
 import { useData } from "../data";
 import { useLang } from "../i18n";
 import { useNavigate } from "react-router-dom";
@@ -30,13 +29,9 @@ export default function Alerts() {
     <div className="screen">
       {/* Header */}
       <div className="header header-simple">
-        <button className="icon-btn" onClick={() => navigate(-1)}>
-          <ArrowLeft size={20} />
-        </button>
+        <div style={{ width: 32 }} />
         <span className="page-title">{t("notifications")}</span>
-        <button className="icon-btn">
-          <CheckCheck size={18} color="#22c55e" />
-        </button>
+        <div style={{ width: 32 }} />
       </div>
 
       {/* Tabs */}
@@ -47,7 +42,7 @@ export default function Alerts() {
             className={`tab-btn-alert ${activeTab === tab ? "tab-alert-active" : ""}`}
             onClick={() => setActiveTab(tab)}
           >
-            {t(tab)}
+            {tab === "expired" ? t("expiredLabel") : t(tab)}
           </button>
         ))}
       </div>

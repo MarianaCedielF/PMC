@@ -1,4 +1,4 @@
-import { ArrowLeft, UserPlus, Settings, X } from "lucide-react";
+import { Settings } from "lucide-react";
 import { useLang } from "../i18n";
 import { useData } from "../data";
 import { useNavigate } from "react-router-dom";
@@ -30,13 +30,9 @@ export default function Profile() {
     <div className="screen">
       {/* Header */}
       <div className="header header-simple">
-        <button className="icon-btn" onClick={() => navigate(-1)}>
-          <ArrowLeft size={20} />
-        </button>
+        <div style={{ width: 32 }} />
         <span className="page-title">{t("profile")}</span>
-        <button className="icon-btn">
-          <UserPlus size={18} color="#22c55e" />
-        </button>
+        <div style={{ width: 32 }} />
       </div>
 
       {/* Profile Card */}

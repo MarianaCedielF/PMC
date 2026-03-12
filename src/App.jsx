@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LangProvider } from "./i18n";
 import { DataProvider } from "./data";
 import BottomNav from "./components/BottomNav";
-import LangToggle from "./components/LangToggle";
 import Home from "./screens/Home";
 import Inventory from "./screens/Inventory";
 import AddProduct from "./screens/AddProduct";
@@ -13,7 +12,6 @@ import "./App.css";
 function AppLayout() {
   return (
     <div className="app-shell">
-      <LangToggle />
       <div className="mobile-frame">
         <div className="mobile-content">
           <Routes>

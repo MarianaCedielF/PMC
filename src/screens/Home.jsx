@@ -1,29 +1,32 @@
-import { Search, AlertCircle, Refrigerator, Package, Plus } from "lucide-react";
+import { Search, AlertCircle, Refrigerator } from "lucide-react";
 import { useData } from "../data";
 import { useLang } from "../i18n";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import LangToggle from "../components/LangToggle";
 
 export default function Home() {
-  const { fresh, warning, expired, fridgeItems, pantryZoneItems, pantryItems } = useData();
-  const { t } = useLang();
+  const { fresh, warning, expired, fridgeItems, pantryZoneItems, pantryItems, categories } = useData();
+  const { t, lang } = useLang();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
 
   const expiringSoon = pantryItems.filter(i => i.status === "warning" || i.status === "expiring");
   const activity = [
-    { id: 1, name: "Free-range Eggs", detail: "addedByUser", user: "Sarah", time: "2 hours ago", status: "added", emoji: "🥚" },
-    { id: 2, name: "Ground Coffee", detail: "consumedBy", user: "David", time: "Yesterday", status: "consumed", emoji: "☕" },
-    { id: 3, name: "Organic Milk", detail: "expiringSoonLabel", user: "", time: "3 hours ago", status: "expiring", emoji: "🥛" },
+    { id: 1, name: "Free-range Eggs", user: "Sarah", time: "2 hours ago", status: "added", emoji: "🥚" },
+    { id: 2, name: "Ground Coffee", user: "David", time: "Yesterday", status: "consumed", emoji: "☕" },
+    { id: 3, name: "Organic Milk", user: "", time: "3 hours ago", status: "expiring", emoji: "🥛" },
   ];
 
-  const filteredItems = search
-    ? pantryItems.filter(i => i.name.toLowerCase().includes(search.toLowerCase()))
-    : [];
+  const filteredItems = search ? pantryItems.filter(i => i.name.toLowerCase().includes(search.toLowerCase())) : [];
+
+  const getCatLabel = (catId) => {
+    const cat = categories.find(c => c.id === catId);
+    return cat ? (cat.label[lang] || cat.label.en) : catId;
+  };
 
   return (
     <div className="screen">
-      {/* Header */}
       <div className="header">
         <div className="header-left">
           <div className="logo-box">
@@ -35,15 +38,10 @@ export default function Home() {
           </div>
         </div>
         <div className="header-right">
-          <button className="icon-btn" onClick={() => navigate("/alerts")}>
-            <span className="notif-dot" />
-            🔔
-          </button>
-          <div className="avatar-circle">👤</div>
+          <LangToggle />
         </div>
       </div>
 
-      {/* Stats */}
       <div className="stats-row">
         <div className="stat-card stat-green">
           <div className="stat-num green">{fresh}</div>
@@ -62,18 +60,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Search */}
       <div className="search-wrap">
         <Search size={16} color="#aaa" />
-        <input
-          className="search-input"
-          placeholder={t("searchPantry")}
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
+        <input className="search-input" placeholder={t("searchPantry")} value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
-      {/* Search results */}
       {search && (
         <div className="search-results">
           {filteredItems.length === 0 ? (
@@ -84,7 +75,7 @@ export default function Home() {
                 <span className="item-emoji">{item.img}</span>
                 <div>
                   <div className="item-name">{item.name}</div>
-                  <div className="item-detail">{item.zone} · {item.detail}</div>
+                  <div className="item-detail">{item.categories?.map(getCatLabel).join(", ")} · {item.detail}</div>
                 </div>
               </div>
             ))
@@ -92,13 +83,11 @@ export default function Home() {
         </div>
       )}
 
-      {/* Expiring Soon */}
       <div className="section-header">
         <div className="section-title-row">
           <AlertCircle size={18} color="#f59e0b" />
           <span className="section-title">{t("expiringSoon")}</span>
         </div>
-        <button className="view-all-btn" onClick={() => navigate("/alerts")}>{t("viewAll")}</button>
       </div>
 
       <div className="expiring-list">
@@ -107,19 +96,16 @@ export default function Home() {
             <div className="expiring-img">{item.img}</div>
             <div className="expiring-info">
               <div className="item-name">{item.name}</div>
-              <div className="item-detail">{item.zone} · {item.detail}</div>
+              <div className="item-detail">{item.categories?.map(getCatLabel).join(", ")} · {item.detail}</div>
             </div>
             <div className="expiring-time">
-              <div className={`expires-label ${item.expiresLabel === "Today" ? "orange" : "orange"}`}>
-                {item.expiresLabel === "Today" ? t("today") : t("tomorrow")}
-              </div>
+              <div className="expires-label orange">{item.expiresLabel === "Today" ? t("today") : t("tomorrow")}</div>
               <div className="expires-time">{item.expiresTime}</div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Storage Zones */}
       <div className="section-header">
         <div className="section-title-row">
           <Refrigerator size={18} color="#22c55e" />
@@ -128,19 +114,18 @@ export default function Home() {
       </div>
 
       <div className="zones-row">
-        <button className="zone-card zone-fridge" onClick={() => navigate("/inventory?zone=Fridge")}>
+        <button className="zone-card zone-fridge" onClick={() => navigate("/inventory?zone=fridge")}>
           <div className="zone-icon">❄️</div>
           <div className="zone-name">{t("fridge")}</div>
           <div className="zone-count">{fridgeItems} {t("itemsInside")}</div>
         </button>
-        <button className="zone-card zone-pantry" onClick={() => navigate("/inventory?zone=Pantry")}>
+        <button className="zone-card zone-pantry" onClick={() => navigate("/inventory?zone=pantry")}>
           <div className="zone-icon">📦</div>
           <div className="zone-name">{t("pantry")}</div>
           <div className="zone-count">{pantryZoneItems} {t("itemsInside")}</div>
         </button>
       </div>
 
-      {/* Activity */}
       <div className="section-header">
         <div className="section-title-row">
           <span className="plus-circle">+</span>

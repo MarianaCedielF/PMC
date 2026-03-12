@@ -85,6 +85,7 @@ const translations = {
     addedByUser: "Added by",
     consumedBy: "Consumed by",
     expiringSoonLabel: "Expiring soon",
+    expiredLabel: "Expired",
   },
   es: {
     appName: "FreshKeeper",
@@ -170,6 +171,7 @@ const translations = {
     addedByUser: "Añadido por",
     consumedBy: "Consumido por",
     expiringSoonLabel: "Caduca pronto",
+    expiredLabel: "Caducado",
   },
 };
 
