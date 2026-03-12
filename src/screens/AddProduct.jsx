@@ -48,9 +48,8 @@ export default function AddProduct() {
     addItem({
       name: form.name,
       categories: form.selectedCats,
-      detail: `${form.quantity || 1} unit${(form.quantity || 1) > 1 ? "s" : ""}`,
+      quantity: parseInt(form.quantity) || 1,
       expiresLabel: form.expiryDate || "Unknown",
-      expiresTime: "",
       status: "fresh",
       img: categories.find(c => c.id === form.selectedCats[0])?.icon || "🛒",
       addedBy: "Me",
