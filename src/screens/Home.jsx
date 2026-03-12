@@ -3,6 +3,7 @@ import { useData } from "../data";
 import { useLang } from "../i18n";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { RecipeCard, getMatchingRecipes } from "./Recipes";
 import LangToggle from "../components/LangToggle";
 
 export default function Home() {
@@ -17,6 +18,8 @@ export default function Home() {
     { id: 2, name: "Ground Coffee", user: "David", time: "Yesterday", status: "consumed", emoji: "☕" },
     { id: 3, name: "Organic Milk", user: "", time: "3 hours ago", status: "expiring", emoji: "🥛" },
   ];
+
+  const matchingRecipes = getMatchingRecipes(pantryItems, categories);
 
   const filteredItems = search ? pantryItems.filter(i => i.name.toLowerCase().includes(search.toLowerCase())) : [];
 
@@ -142,6 +145,18 @@ export default function Home() {
               {item.status === "added" ? t("added") : item.status === "consumed" ? t("consumed") : t("expiring")}
             </span>
           </div>
+        ))}
+      </div>
+      <div className="section-header" style={{ marginTop: 20 }}>
+        <div className="section-title-row">
+          <span>👨‍🍳</span>
+          <span className="section-title">{t("suggestedRecipes")}</span>
+        </div>
+        <button className="view-all-btn" onClick={() => navigate("/recipes")}>{t("seeMore")}</button>
+      </div>
+      <div className="recipes-list">
+        {matchingRecipes.slice(0, 2).map(recipe => (
+          <RecipeCard key={recipe.id} recipe={recipe} lang={lang} t={t} compact={true} />
         ))}
       </div>
     </div>

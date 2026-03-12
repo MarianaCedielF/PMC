@@ -251,4 +251,19 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 /* Disabled save button */
 .save-btn-disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
+/* Recipes */
+.recipes-subtitle { font-size: 12px; color: var(--text-sub); font-weight: 500; margin-bottom: 14px; margin-top: -8px; }
+.recipes-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+.recipe-card { background: white; border-radius: 16px; padding: 14px; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow); }
+.recipe-card-compact { padding: 12px; }
+.recipe-emoji { font-size: 36px; width: 56px; height: 56px; background: #fff8f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.recipe-card-compact .recipe-emoji { font-size: 28px; width: 46px; height: 46px; }
+.recipe-info { flex: 1; }
+.recipe-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.recipe-desc { font-size: 12px; color: var(--text-sub); margin-bottom: 6px; line-height: 1.4; }
+.recipe-meta { display: flex; gap: 10px; margin-bottom: 8px; }
+.recipe-meta-item { display: flex; align-items: center; gap: 3px; font-size: 11px; color: var(--text-sub); font-weight: 600; }
+.recipe-ingredients { display: flex; flex-wrap: wrap; gap: 4px; }
+.recipe-ing-tag { background: var(--green-light); color: var(--green-dark); font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 20px; }
+
 @media (max-width: 420px) { .mobile-frame { border-radius: 0; max-width: 100%; } }

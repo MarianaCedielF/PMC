@@ -86,6 +86,11 @@ const translations = {
     consumedBy: "Consumed by",
     expiringSoonLabel: "Expiring soon",
     expiredLabel: "Expired",
+    suggestedRecipes: "Suggested Recipes",
+    seeMore: "See More",
+    basedOnPantry: "Based on what you have",
+    minutes: "min",
+    ingredients: "ingredients",
   },
   es: {
     appName: "FreshKeeper",
@@ -172,6 +177,11 @@ const translations = {
     consumedBy: "Consumido por",
     expiringSoonLabel: "Caduca pronto",
     expiredLabel: "Caducado",
+    suggestedRecipes: "Recetas Sugeridas",
+    seeMore: "Ver más",
+    basedOnPantry: "Basado en lo que tienes",
+    minutes: "min",
+    ingredients: "ingredientes",
   },
 };
 

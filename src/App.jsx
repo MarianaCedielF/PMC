@@ -7,6 +7,7 @@ import Inventory from "./screens/Inventory";
 import AddProduct from "./screens/AddProduct";
 import Alerts from "./screens/Alerts";
 import Profile from "./screens/Profile";
+import Recipes from "./screens/Recipes";
 import "./App.css";
 
 function AppLayout() {
@@ -20,6 +21,7 @@ function AppLayout() {
             <Route path="/add" element={<AddProduct />} />
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/recipes" element={<Recipes />} />
           </Routes>
         </div>
         <BottomNav />
