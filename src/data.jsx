@@ -38,7 +38,11 @@ export function DataProvider({ children }) {
   const [pantryItems, setPantryItems] = useState(initialPantryItems);
   const [shoppingList, setShoppingList] = useState(initialShoppingList);
   const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
-  const [activity, setActivity] = useState([]);
+  const [activity, setActivity] = useState([
+    { id: 1, name: "Free-range Eggs", user: "Sarah", time: "1 hour ago", status: "added", emoji: "🥚" },
+    { id: 2, name: "Avocados", user: "James", time: "2 hours ago", status: "consumed", emoji: "🥑" },
+    { id: 3, name: "Cheddar Cheese", user: "David", time: "Yesterday", status: "added", emoji: "🧀" },
+  ]);
   const [notifications, setNotifications] = useState([
     { id: 1, type: "expiring", item: "Organic Whole Milk", msg: "Expires today! Use it for cereal or making a quick béchamel sauce.", time: "2h ago", section: "today", img: "🥛", actioned: false },
     { id: 2, type: "expired", item: "Greek Yogurt (500g)", msg: "Expired yesterday. Please check if it's still good or compost it.", time: "5h ago", section: "today", img: "🫙", actioned: false },
@@ -53,14 +57,17 @@ export function DataProvider({ children }) {
   };
   const removeItem = (id) => setPantryItems(prev => prev.filter(i => i.id !== id));
   const consumeItem = (id, amount) => {
-    setPantryItems(prev => prev.map(item => {
-      if (item.id !== id) return item;
-      const currentQty = parseInt(item.quantity) ?? 1;
-      const newQty = currentQty - amount;
-      logActivity(item, "consumed");
-      if (newQty <= 0) return { ...item, quantity: 0, status: "consumed" };
-      return { ...item, quantity: newQty };
-    }));
+    setPantryItems(prev => {
+      const item = prev.find(i => i.id === id);
+      if (item) logActivity(item, "consumed");
+      return prev.map(i => {
+        if (i.id !== id) return i;
+        const currentQty = parseInt(i.quantity) ?? 1;
+        const newQty = currentQty - amount;
+        if (newQty <= 0) return { ...i, quantity: 0, status: "consumed" };
+        return { ...i, quantity: newQty };
+      });
+    });
   };
   const toggleShoppingItem = (id) => setShoppingList(prev => prev.map(i => i.id === id ? { ...i, checked: !i.checked } : i));
   const addShoppingItem = (name, cats = []) => setShoppingList(prev => [...prev, { id: Date.now(), name, categories: cats, addedBy: "Me", avatar: "ME", checked: false }]);
