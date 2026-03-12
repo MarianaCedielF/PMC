@@ -159,7 +159,7 @@ export default function Home() {
       </div>
       <div className="recipes-list">
         {matchingRecipes.slice(0, 2).map(recipe => (
-          <RecipeCard key={recipe.id} recipe={recipe} lang={lang} t={t} compact={true} />
+          <RecipeCard key={recipe.id} recipe={recipe} lang={lang} t={t} compact={true} onClick={() => navigate(`/recipes/${recipe.id}`)} />
         ))}
       </div>
     </div>

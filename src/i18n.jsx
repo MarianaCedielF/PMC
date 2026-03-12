@@ -97,6 +97,11 @@ const translations = {
     howMany: "How many did you use?",
     remaining: "remaining",
     outOfStock: "Out of stock",
+    recipeDetail: "Recipe Detail",
+    recipeIngredients: "Ingredients",
+    recipeSteps: "Steps",
+    recipeTime: "Preparation time",
+    tryRecipe: "I made this!",
   },
   es: {
     appName: "FreshKeeper",
@@ -194,6 +199,11 @@ const translations = {
     howMany: "¿Cuántos usaste?",
     remaining: "restantes",
     outOfStock: "Sin stock",
+    recipeDetail: "Detalle de Receta",
+    recipeIngredients: "Ingredientes",
+    recipeSteps: "Pasos",
+    recipeTime: "Tiempo de preparación",
+    tryRecipe: "¡Lo hice!",
   },
 };
 
