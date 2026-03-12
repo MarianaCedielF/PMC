@@ -11,7 +11,9 @@ export default function RecipeDetail() {
     const navigate = useNavigate();
     const [madeIt, setMadeIt] = useState(false);
     useEffect(() => {
-        document.querySelector(".mobile-content")?.scrollTo({ top: 0 });
+        const el = document.querySelector(".mobile-content");
+        if (el) el.scrollTop = 0;
+        window.scrollTo(0, 0);
     }, []);
 
     const recipe = ALL_RECIPES.find(r => r.id === parseInt(id));
