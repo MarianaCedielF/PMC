@@ -88,7 +88,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .zone-card { border: none; border-radius: var(--radius); padding: 18px 14px; cursor: pointer; text-align: left; font-family: inherit; transition: transform 0.15s, box-shadow 0.15s; }
 .zone-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
 .zone-fridge { background: #dbeafe; }
-.zone-pantry { background: #fef9c3; }
+.zone-pantry { background: #fefce8; }
 .zone-icon { font-size: 28px; margin-bottom: 8px; }
 .zone-name { font-size: 16px; font-weight: 800; color: var(--text); }
 .zone-count { font-size: 12px; color: var(--text-sub); margin-top: 2px; font-weight: 500; }
@@ -142,8 +142,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .scan-label { font-size: 13px; font-weight: 600; color: var(--text); }
 
 .form-field { margin-bottom: 14px; }
-.form-row { display: flex; gap: 12px; }
-.form-field-half { flex: 1; }
+.form-row { display: flex; gap: 8px; }
+.form-field-half { flex: 1; min-width: 0; }
 .field-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; }
 .field-input { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; font-size: 14px; font-family: inherit; color: var(--text); background: white; outline: none; transition: border-color 0.15s; }
 .field-input:focus { border-color: var(--green); }

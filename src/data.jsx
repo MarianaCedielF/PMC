@@ -9,7 +9,6 @@ export const DEFAULT_CATEGORIES = [
   { id: "frozen", label: { en: "Frozen", es: "Congelados" }, icon: "🧊" },
   { id: "fridge", label: { en: "Fridge", es: "Nevera" }, icon: "❄️" },
   { id: "pantry", label: { en: "Pantry", es: "Despensa" }, icon: "📦" },
-  { id: "household", label: { en: "Household", es: "Hogar" }, icon: "🧹" },
   { id: "other", label: { en: "Other", es: "Otros" }, icon: "🏷️" },
 ];
 

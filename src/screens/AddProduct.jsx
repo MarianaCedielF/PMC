@@ -4,8 +4,7 @@ import { useData } from "../data";
 import { useLang } from "../i18n";
 import { useNavigate } from "react-router-dom";
 
-const EMOJI_OPTIONS = ["🥛","🍎","🥩","🍞","☕","🧊","❄️","📦","🧹","🏷️","🥚","🧀","🥑","🥬","🍓","🫙","🧴","🍷","🥫","🌿"];
-
+const EMOJI_OPTIONS = ["🥛","🍎","🥩","🍞","☕","🧊","❄️","📦","🏷️","🥚","🧀","🥑","🥬","🍓","🫙","🍷","🥫","🌿","🧁","🍰","🥐","🍋","🍇","🫐","🥦","🥕","🧅","🧄","🍅","🥜","🌽","🍄","🫒","🥝","🍑","🍌","🍊","🫚","🧈","🥗","🍯","🧃","🥤","🫖","🍵","🌶️","🫑","🥒","🍆","🥞","🧇","🍖","🥓","🌮","🥙"];
 export default function AddProduct() {
   const { addItem, categories, addCategory } = useData();
   const { t, lang } = useLang();
@@ -164,7 +163,7 @@ export default function AddProduct() {
             <input className="field-input" type="date" value={form.expiryDate} onChange={e => setForm({ ...form, expiryDate: e.target.value })} />
           </div>
           <div className="form-field form-field-half">
-            <label className="field-label">⏳ {t("quantity")}</label>
+            <label className="field-label">🔢 {t("quantity")}</label>
             <input className="field-input" type="number" min="1" value={form.quantity} onChange={e => setForm({ ...form, quantity: parseInt(e.target.value) || 1 })} />
           </div>
         </div>
