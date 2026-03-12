@@ -32,7 +32,7 @@ const translations = {
     dairy: "Dairy",
     household: "Household",
     addSomething: "Add something to buy...",
-    pantryInventory: "Pantry Inventory",
+    shoppingListTitle: "Shopping List",
     addedBy: "Added by",
     // Add product screen
     addProduct: "Add Product",
@@ -129,7 +129,7 @@ const translations = {
     dairy: "Lácteos",
     household: "Hogar",
     addSomething: "Añadir algo a comprar...",
-    pantryInventory: "Inventario de Despensa",
+    shoppingListTitle: "Lista de Compras",
     addedBy: "Añadido por",
     // Add product screen
     addProduct: "Añadir Producto",

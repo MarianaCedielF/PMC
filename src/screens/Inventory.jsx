@@ -125,7 +125,7 @@ export default function Inventory() {
       <div className="section-header" style={{ marginTop: 16 }}>
         <div className="section-title-row">
           <span>📋</span>
-          <span className="section-title">{t("pantryInventory")}</span>
+          <span className="section-title">{t("shoppingListTitle")}</span>
           <span className="badge-count">{shoppingList.length}</span>
         </div>
       </div>
