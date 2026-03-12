@@ -57,11 +57,7 @@ export default function Inventory() {
       <div className="header header-simple">
         <div style={{ width: 32 }} />
         <span className="page-title">{lang === "es" ? "Inventario" : "Inventory"}</span>
-        <div className="avatars-stack">
-          <div className="avatar-sm" style={{ background: "#e8b4b8" }}>S</div>
-          <div className="avatar-sm" style={{ background: "#b4c8e8", marginLeft: -8 }}>J</div>
-          <div className="avatar-sm green-badge" style={{ marginLeft: -8 }}>+2</div>
-        </div>
+        <div style={{ width: 32 }} />
       </div>
 
       {/* Category tabs — dynamic */}
