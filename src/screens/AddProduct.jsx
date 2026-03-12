@@ -10,7 +10,8 @@ export default function AddProduct() {
   const { t, lang } = useLang();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({ name: "", selectedCats: [], expiryDate: "", quantity: 1, notes: "" });
+  const [form, setForm] = useState({ name: "", selectedCats: [], expiryDate: "", quantity: 1, notes: "", img: "" });
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [saved, setSaved] = useState(false);
   const [scanActive, setScanActive] = useState(false);
 
@@ -51,7 +52,7 @@ export default function AddProduct() {
       quantity: parseInt(form.quantity) || 1,
       expiresLabel: form.expiryDate || "Unknown",
       status: "fresh",
-      img: categories.find(c => c.id === form.selectedCats[0])?.icon || "🛒",
+      img: form.img || categories.find(c => c.id === form.selectedCats[0])?.icon || "🛒",
       addedBy: "Me",
       hoursAgo: 0,
     });
@@ -86,10 +87,27 @@ export default function AddProduct() {
 
         <div className="form-field">
           <label className="field-label">🛒 {t("productName")}</label>
-          <input className="field-input" placeholder={t("productNamePlaceholder")} value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+          <div className="name-with-icon">
+            <button className="emoji-square-btn" type="button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+              {form.img || "🛒"}
+            </button>
+            <input className="field-input" placeholder={t("productNamePlaceholder")} value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+          </div>
+          {showEmojiPicker && (
+            <div className="emoji-grid" style={{ marginTop: 8 }}>
+              {EMOJI_OPTIONS.map(emoji => (
+                <button
+                  key={emoji}
+                  className={`emoji-btn ${form.img === emoji ? "emoji-btn-active" : ""}`}
+                  onClick={() => { setForm({ ...form, img: emoji }); setShowEmojiPicker(false); }}
+                  type="button"
+                >
+                  {emoji}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
-
-        {/* Multi-category selector */}
         <div className="form-field">
           <label className="field-label">🏷️ {t("category")} <span style={{ color: "#aaa", fontWeight: 400 }}>({lang === "es" ? "selecciona una o más" : "select one or more"})</span></label>
           <div className="cat-chips" style={{ marginTop: 6 }}>
