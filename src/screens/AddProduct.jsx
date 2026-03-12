@@ -48,7 +48,7 @@ export default function AddProduct() {
     addItem({
       name: form.name,
       categories: form.selectedCats,
-      detail: `${form.quantity} unit${form.quantity > 1 ? "s" : ""}`,
+      detail: `${form.quantity || 1} unit${(form.quantity || 1) > 1 ? "s" : ""}`,
       expiresLabel: form.expiryDate || "Unknown",
       expiresTime: "",
       status: "fresh",
@@ -164,7 +164,7 @@ export default function AddProduct() {
           </div>
           <div className="form-field form-field-half">
             <label className="field-label">🔢 {t("quantity")}</label>
-            <input className="field-input" type="number" min="1" value={form.quantity} onChange={e => setForm({ ...form, quantity: parseInt(e.target.value) || 1 })} />
+            <input className="field-input" type="text" inputMode="numeric" value={form.quantity} onChange={e => setForm({ ...form, quantity: e.target.value })} style={{ appearance: "textfield", MozAppearance: "textfield" }} />
           </div>
         </div>
 
