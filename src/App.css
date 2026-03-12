@@ -87,8 +87,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .zones-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
 .zone-card { border: none; border-radius: var(--radius); padding: 18px 14px; cursor: pointer; text-align: left; font-family: inherit; transition: transform 0.15s, box-shadow 0.15s; }
 .zone-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
-.zone-fridge { background: var(--green-light); }
-.zone-pantry { background: #f1f5f9; }
+.zone-fridge { background: #dbeafe; }
+.zone-pantry { background: #fef9c3; }
 .zone-icon { font-size: 28px; margin-bottom: 8px; }
 .zone-name { font-size: 16px; font-weight: 800; color: var(--text); }
 .zone-count { font-size: 12px; color: var(--text-sub); margin-top: 2px; font-weight: 500; }
@@ -177,7 +177,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .empty-emoji { font-size: 48px; margin-bottom: 12px; }
 .empty-text { color: var(--text-sub); font-size: 14px; font-weight: 500; }
 
-.profile-center { text-align: center; padding: 16px 0 12px; }
+.profile-center { text-align: center; padding: 0 0 12px; }
 .profile-avatar-ring { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--green); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; background: white; box-shadow: 0 0 0 4px var(--green-light); }
 .profile-avatar { font-size: 48px; }
 .profile-name { font-size: 20px; font-weight: 800; }

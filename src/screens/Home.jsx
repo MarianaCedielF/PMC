@@ -27,19 +27,10 @@ export default function Home() {
 
   return (
     <div className="screen">
-      <div className="header">
-        <div className="header-left">
-          <div className="logo-box">
-            <Refrigerator size={22} color="white" />
-          </div>
-          <div>
-            <div className="app-name">{t("appName")}</div>
-            <div className="app-sub">{t("pantryDashboard")}</div>
-          </div>
-        </div>
-        <div className="header-right">
-          <LangToggle />
-        </div>
+      <div className="header header-simple">
+        <div style={{ width: 32 }} />
+        <span className="page-title">{t("pantryDashboard")}</span>
+        <LangToggle />
       </div>
 
       <div className="stats-row">
