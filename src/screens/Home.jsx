@@ -69,7 +69,6 @@ export default function Home() {
                 <span className="item-emoji">{item.img}</span>
                 <div>
                   <div className="item-name">{item.name}</div>
-                  <div className="item-detail">{item.categories?.map(getCatLabel).join(", ")} · {item.detail}</div>
                 </div>
               </div>
             ))
@@ -90,11 +89,15 @@ export default function Home() {
             <div className="expiring-img">{item.img}</div>
             <div className="expiring-info">
               <div className="item-name">{item.name}</div>
-              <div className="item-detail">{item.categories?.map(getCatLabel).join(", ")} · {item.detail}</div>
+              <div className="item-detail">{item.categories?.map(getCatLabel).join(", ")}</div>
+              <span className={(parseInt(item.quantity) ?? 1) > 0 ? "qty-badge" : "qty-badge qty-empty"}>
+                {(parseInt(item.quantity) ?? 1) > 0
+                  ? `${parseInt(item.quantity) ?? 1} ${t("remaining")}`
+                  : t("outOfStock")}
+              </span>
             </div>
             <div className="expiring-time">
               <div className="expires-label orange">{item.expiresLabel === "Today" ? t("today") : t("tomorrow")}</div>
-              <div className="expires-time">{item.expiresTime}</div>
             </div>
           </div>
         ))}

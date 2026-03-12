@@ -91,6 +91,12 @@ const translations = {
     basedOnPantry: "Based on what you have",
     minutes: "min",
     ingredients: "ingredients",
+    consume: "Consume",
+    consumed: "Consumed",
+    consumeProduct: "Consume Product",
+    howMany: "How many did you use?",
+    remaining: "remaining",
+    outOfStock: "Out of stock",
   },
   es: {
     appName: "FreshKeeper",
@@ -182,6 +188,12 @@ const translations = {
     basedOnPantry: "Basado en lo que tienes",
     minutes: "min",
     ingredients: "ingredientes",
+    consume: "Consumir",
+    consumed: "Consumido",
+    consumeProduct: "Consumir Producto",
+    howMany: "¿Cuántos usaste?",
+    remaining: "restantes",
+    outOfStock: "Sin stock",
   },
 };
 
