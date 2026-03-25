@@ -137,6 +137,8 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .field-label { display: block; font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; }
 .field-input { width: 100%; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; font-size: 14px; font-family: inherit; color: var(--text); background: white; outline: none; transition: border-color 0.15s; }
 .field-input:focus { border-color: var(--green); }
+.field-input.input-error { border-color: #ef4444; }
+.field-error { font-size: 12px; color: #ef4444; margin-top: 4px; }
 .field-select { appearance: auto; cursor: pointer; }
 .field-textarea { min-height: 80px; resize: vertical; }
 
@@ -312,3 +314,37 @@ input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin
 .emoji-square-btn:hover { border-color: var(--green); }
 
 @media (max-width: 420px) { .mobile-frame { border-radius: 0; max-width: 100%; } }
+
+/* ─── Mejoras adicionales ─────────────────────────────────────────── */
+
+/* form-row en una fila horizontal */
+.form-row-h { display: flex; gap: 12px; }
+.form-row-h .form-field { flex: 1; }
+
+/* Stat cards borders */
+.stat-green { border: 2px solid var(--green); }
+.stat-red   { border: 2px solid var(--red);   }
+
+/* Profile actions – soporte 3 botones */
+.profile-actions { display: flex; gap: 10px; margin: 14px 0; align-items: stretch; }
+.profile-actions .invite-btn { flex: 1; }
+.profile-actions .settings-btn { width: 48px; height: 48px; flex-shrink: 0; }
+
+/* Tab active badge */
+.tab-count { background: var(--green); color: white; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 10px; margin-left: 3px; }
+
+/* Pantry item row — tighter */
+.pantry-item-row { cursor: default; }
+
+/* Notification badge en bottom nav */
+.nav-badge { position: absolute; top: 2px; right: 10px; width: 8px; height: 8px; background: var(--red); border-radius: 50%; border: 2px solid white; }
+
+/* Search result item hover */
+.search-result-item:hover { background: var(--green-light); }
+
+/* Scan hint animation */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.scan-hint { animation: fadeIn 0.2s ease; }
+
+/* Recipe card pointer on hover */
+.recipe-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.12); transform: translateY(-1px); transition: all 0.15s; }

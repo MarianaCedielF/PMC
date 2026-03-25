@@ -10,7 +10,7 @@ export const ALL_RECIPES = [
     emoji: "🍓",
     time: 5,
     uses: ["produce", "dairy"],
-    ingredients: { en: ["Strawberries", "Milk", "Yogurt"], es: ["Fresas", "Leche", "Yogur"] },
+    ingredients: { en: ["1 cup Strawberries", "1 cup Milk", "½ cup Yogurt"], es: ["1 taza de Fresas", "1 taza de Leche", "½ taza de Yogur"] },
     description: { en: "Quick and refreshing smoothie perfect for breakfast.", es: "Batido rápido y refrescante perfecto para el desayuno." },
     steps: {
       en: ["Add strawberries to the blender.", "Pour in the milk and yogurt.", "Blend for 30 seconds until smooth.", "Serve cold and enjoy!"],
@@ -23,7 +23,7 @@ export const ALL_RECIPES = [
     emoji: "🥑",
     time: 10,
     uses: ["produce", "bakery"],
-    ingredients: { en: ["Avocado", "Sourdough Bread", "Lemon"], es: ["Aguacate", "Pan de masa madre", "Limón"] },
+    ingredients: { en: ["1 ripe Avocado", "2 slices Sourdough Bread", "½ Lemon"], es: ["1 Aguacate maduro", "2 rebanadas de Pan de masa madre", "½ Limón"] },
     description: { en: "Classic avocado toast with a squeeze of lemon.", es: "Clásica tostada de aguacate con un toque de limón." },
     steps: {
       en: ["Toast the sourdough bread until golden.", "Mash the avocado with a fork.", "Spread avocado on the toast.", "Squeeze lemon juice on top and season with salt."],
@@ -36,7 +36,7 @@ export const ALL_RECIPES = [
     emoji: "🍳",
     time: 15,
     uses: ["produce", "dairy"],
-    ingredients: { en: ["Baby Spinach", "Eggs", "Cheese"], es: ["Espinacas", "Huevos", "Queso"] },
+    ingredients: { en: ["1 cup Baby Spinach", "3 Eggs", "¼ cup shredded Cheese"], es: ["1 taza de Espinacas", "3 Huevos", "¼ taza de Queso rallado"] },
     description: { en: "Fluffy omelette packed with fresh spinach and cheese.", es: "Tortilla esponjosa con espinacas frescas y queso." },
     steps: {
       en: ["Beat the eggs in a bowl and season.", "Heat a pan over medium heat with butter.", "Pour in the eggs and let them set slightly.", "Add spinach and cheese, fold and serve."],
@@ -49,7 +49,7 @@ export const ALL_RECIPES = [
     emoji: "🥪",
     time: 8,
     uses: ["dairy", "bakery"],
-    ingredients: { en: ["Cheddar Cheese", "Sourdough Bread", "Butter"], es: ["Queso Cheddar", "Pan de masa madre", "Mantequilla"] },
+    ingredients: { en: ["2 slices Cheddar Cheese", "2 slices Sourdough Bread", "1 tbsp Butter"], es: ["2 lonchas de Queso Cheddar", "2 rebanadas de Pan de masa madre", "1 cda de Mantequilla"] },
     description: { en: "Crispy grilled cheese sandwich with sourdough.", es: "Sándwich de queso a la plancha con pan de masa madre." },
     steps: {
       en: ["Butter both sides of the sourdough bread.", "Place cheddar cheese between the slices.", "Grill on a pan over medium heat.", "Cook 3 minutes per side until golden and melted."],
@@ -62,7 +62,7 @@ export const ALL_RECIPES = [
     emoji: "🫙",
     time: 5,
     uses: ["dairy", "produce"],
-    ingredients: { en: ["Greek Yogurt", "Strawberries", "Honey"], es: ["Yogur griego", "Fresas", "Miel"] },
+    ingredients: { en: ["1 cup Greek Yogurt", "½ cup Strawberries", "1 tbsp Honey"], es: ["1 taza de Yogur griego", "½ taza de Fresas", "1 cda de Miel"] },
     description: { en: "Creamy yogurt bowl topped with fresh fruit.", es: "Bowl cremoso de yogur con fruta fresca." },
     steps: {
       en: ["Spoon Greek yogurt into a bowl.", "Slice strawberries and place on top.", "Drizzle honey over everything.", "Serve immediately."],
@@ -75,7 +75,7 @@ export const ALL_RECIPES = [
     emoji: "🥗",
     time: 10,
     uses: ["produce"],
-    ingredients: { en: ["Baby Spinach", "Avocado", "Strawberries"], es: ["Espinacas", "Aguacate", "Fresas"] },
+    ingredients: { en: ["2 cups Baby Spinach", "1 Avocado", "½ cup Strawberries"], es: ["2 tazas de Espinacas", "1 Aguacate", "½ taza de Fresas"] },
     description: { en: "Fresh and colorful salad with seasonal vegetables.", es: "Ensalada fresca y colorida con verduras de temporada." },
     steps: {
       en: ["Wash and dry the spinach leaves.", "Slice avocado and strawberries.", "Combine all ingredients in a bowl.", "Dress with olive oil and lemon juice."],
@@ -88,7 +88,7 @@ export const ALL_RECIPES = [
     emoji: "☕",
     time: 5,
     uses: ["beverages", "dairy"],
-    ingredients: { en: ["Ground Coffee", "Milk"], es: ["Café molido", "Leche"] },
+    ingredients: { en: ["2 tbsp Ground Coffee", "1 cup Milk"], es: ["2 cdas de Café molido", "1 taza de Leche"] },
     description: { en: "Classic café au lait with fresh ground coffee.", es: "Clásico café con leche recién molido." },
     steps: {
       en: ["Brew a strong cup of ground coffee.", "Heat the milk until steaming.", "Pour coffee into a mug.", "Add hot milk and stir gently."],
@@ -101,7 +101,7 @@ export const ALL_RECIPES = [
     emoji: "🍓",
     time: 10,
     uses: ["dairy", "produce"],
-    ingredients: { en: ["Greek Yogurt", "Strawberries", "Granola"], es: ["Yogur griego", "Fresas", "Granola"] },
+    ingredients: { en: ["1 cup Greek Yogurt", "½ cup Strawberries", "¼ cup Granola"], es: ["1 taza de Yogur griego", "½ taza de Fresas", "¼ taza de Granola"] },
     description: { en: "Layered yogurt parfait with fresh fruits.", es: "Parfait de yogur en capas con frutas frescas." },
     steps: {
       en: ["Layer Greek yogurt at the bottom of a glass.", "Add a layer of sliced strawberries.", "Sprinkle granola on top.", "Repeat layers and serve chilled."],

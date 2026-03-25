@@ -1,10 +1,10 @@
 import { Search, AlertCircle, Refrigerator } from "lucide-react";
 import { useData } from "../data";
 import { useLang } from "../i18n";
+import { friendlyExpiry } from "../data";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { RecipeCard, getMatchingRecipes } from "./Recipes";
-import LangToggle from "../components/LangToggle";
 
 export default function Home() {
   const { fresh, warning, expired, fridgeItems, pantryZoneItems, pantryItems, categories, activity } = useData();
@@ -13,9 +13,7 @@ export default function Home() {
   const [search, setSearch] = useState("");
 
   const expiringSoon = pantryItems.filter(i => i.status === "warning" || i.status === "expiring");
-
   const matchingRecipes = getMatchingRecipes(pantryItems, categories);
-
   const filteredItems = search ? pantryItems.filter(i => i.name.toLowerCase().includes(search.toLowerCase())) : [];
 
   const getCatLabel = (catId) => {
@@ -28,7 +26,7 @@ export default function Home() {
       <div className="header header-simple">
         <div style={{ width: 32 }} />
         <span className="page-title">{t("pantryDashboard")}</span>
-        <LangToggle />
+        <div style={{ width: 32 }} />
       </div>
 
       <div className="stats-row">
@@ -51,20 +49,40 @@ export default function Home() {
 
       <div className="search-wrap">
         <Search size={16} color="#aaa" />
-        <input className="search-input" placeholder={t("searchPantry")} value={search} onChange={e => setSearch(e.target.value)} />
+        <input
+          className="search-input"
+          placeholder={t("searchPantry")}
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        {search && (
+          <button
+            onClick={() => setSearch("")}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "#aaa", padding: "0 2px", fontSize: 16 }}
+          >×</button>
+        )}
       </div>
 
       {search && (
         <div className="search-results">
           {filteredItems.length === 0 ? (
-            <div className="no-results">No items found</div>
+            <div className="no-results">{lang === "es" ? "Sin resultados" : "No items found"}</div>
           ) : (
             filteredItems.map(item => (
-              <div key={item.id} className="search-result-item">
+              <div key={item.id} className="search-result-item" onClick={() => navigate("/inventory")} style={{ cursor: "pointer" }}>
                 <span className="item-emoji">{item.img}</span>
                 <div>
                   <div className="item-name">{item.name}</div>
+                  <div className="item-detail">
+                    {item.categories?.map(getCatLabel).join(", ")} ·{" "}
+                    <span className={`expires-chip expires-${item.status}`}>
+                      {friendlyExpiry(item.expiresLabel, lang)}
+                    </span>
+                  </div>
                 </div>
+                <span className={`badge badge-${item.status === "fresh" ? "added" : item.status === "expired" ? "consumed" : "expiring"}`}>
+                  {item.status === "fresh" ? t("fresh") : item.status === "expired" ? t("expiredLabel") : t("expiringSoonLabel")}
+                </span>
               </div>
             ))
           )}
@@ -76,26 +94,35 @@ export default function Home() {
           <AlertCircle size={18} color="#f59e0b" />
           <span className="section-title">{t("expiringSoon")}</span>
         </div>
+        {expiringSoon.length > 2 && (
+          <button className="view-all-btn" onClick={() => navigate("/alerts")}>{t("viewAll")}</button>
+        )}
       </div>
 
       <div className="expiring-list">
-        {expiringSoon.slice(0, 2).map(item => (
-          <div key={item.id} className="expiring-card">
-            <div className="expiring-img">{item.img}</div>
-            <div className="expiring-info">
-              <div className="item-name">{item.name}</div>
-              <div className="item-detail">{item.categories?.map(getCatLabel).join(", ")}</div>
-              <span className={(parseInt(item.quantity) ?? 1) > 0 ? "qty-badge" : "qty-badge qty-empty"}>
-                {(parseInt(item.quantity) ?? 1) > 0
-                  ? `${parseInt(item.quantity) ?? 1} ${t("remaining")}`
-                  : t("outOfStock")}
-              </span>
-            </div>
-            <div className="expiring-time">
-              <div className="expires-label orange">{item.expiresLabel === "Today" ? t("today") : t("tomorrow")}</div>
-            </div>
+        {expiringSoon.length === 0 ? (
+          <div style={{ background: "white", borderRadius: 14, padding: "16px 14px", textAlign: "center", color: "var(--text-sub)", fontSize: 13, boxShadow: "var(--shadow)" }}>
+            {lang === "es" ? "✅ ¡Todo fresco! Sin alertas de vencimiento." : "✅ All fresh! No expiry alerts."}
           </div>
-        ))}
+        ) : (
+          expiringSoon.slice(0, 2).map(item => (
+            <div key={item.id} className="expiring-card">
+              <div className="expiring-img">{item.img}</div>
+              <div className="expiring-info">
+                <div className="item-name">{item.name}</div>
+                <div className="item-detail">{item.categories?.map(getCatLabel).join(", ")}</div>
+                <span className={(parseInt(item.quantity) ?? 1) > 0 ? "qty-badge" : "qty-badge qty-empty"}>
+                  {(parseInt(item.quantity) ?? 1) > 0
+                    ? `${parseInt(item.quantity) ?? 1} ${t("remaining")}`
+                    : t("outOfStock")}
+                </span>
+              </div>
+              <div className="expiring-time">
+                <div className="expires-label orange">{friendlyExpiry(item.expiresLabel, lang)}</div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       <div className="section-header">
@@ -150,6 +177,7 @@ export default function Home() {
           </div>
         ))}
       </div>
+
       <div className="section-header" style={{ marginTop: 20 }}>
         <div className="section-title-row">
           <span>👨‍🍳</span>

@@ -1,11 +1,13 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLang } from "../i18n";
-import { Home, Package, Bell, User, Plus } from "lucide-react";
+import { usePermissions } from "../auth";
+import { Home, Package, Bell, User, Plus, Lock } from "lucide-react";
 
 export default function BottomNav() {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useLang();
+  const perms = usePermissions();
 
   const isActive = (path) => location.pathname === path;
 
@@ -20,8 +22,8 @@ export default function BottomNav() {
         <span>{t("inventory")}</span>
       </button>
       <button className="nav-btn nav-add" onClick={() => navigate("/add")}>
-        <div className="nav-plus-circle">
-          <Plus size={24} color="white" />
+        <div className="nav-plus-circle" style={!perms.addProducts ? { background: "#9ca3af" } : {}}>
+          {perms.addProducts ? <Plus size={24} color="white" /> : <Lock size={18} color="white" />}
         </div>
       </button>
       <button className={`nav-btn ${isActive("/alerts") ? "nav-active" : ""}`} onClick={() => navigate("/alerts")}>

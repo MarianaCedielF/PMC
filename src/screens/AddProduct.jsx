@@ -1,21 +1,40 @@
 import { useState } from "react";
-import { CheckCircle, Plus, X } from "lucide-react";
-import { useData } from "../data";
+import { CheckCircle, Plus, X, Lock } from "lucide-react";
+import { useData, computeStatus, friendlyExpiry } from "../data";
 import { useLang } from "../i18n";
+import { usePermissions } from "../auth";
 import { useNavigate } from "react-router-dom";
 
 const EMOJI_OPTIONS = ["🥛","🍎","🥩","🍞","☕","🧊","❄️","📦","🏷️","🥚","🧀","🥑","🥬","🍓","🫙","🍷","🥫","🌿","🧁","🍰","🥐","🍋","🍇","🫐","🥦","🥕","🧅","🧄","🍅","🥜","🌽","🍄","🫒","🥝","🍑","🍌","🍊","🫚","🧈","🥗","🍯","🧃","🥤","🫖","🍵","🌶️","🫑","🥒","🍆","🥞","🧇","🍖","🥓","🌮","🥙"];
+
 export default function AddProduct() {
   const { addItem, categories, addCategory } = useData();
   const { t, lang } = useLang();
+  const perms = usePermissions();
   const navigate = useNavigate();
+
+  if (!perms.addProducts) {
+    return (
+      <div className="screen" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100%", textAlign: "center", padding: "0 24px" }}>
+        <div style={{ fontSize: 52, marginBottom: 16 }}><Lock size={52} color="#d1d5db" /></div>
+        <div style={{ fontSize: 18, fontWeight: 800, color: "var(--text)", marginBottom: 8 }}>Sin permiso</div>
+        <div style={{ fontSize: 14, color: "var(--text-sub)", lineHeight: 1.6, marginBottom: 24 }}>
+          Tu rol de <strong>Miembro</strong> no permite agregar productos directamente a la despensa.
+          Puedes añadir artículos a la lista de compras desde la sección de Inventario.
+        </div>
+        <button className="save-btn" style={{ width: "100%", maxWidth: 280 }} onClick={() => navigate("/inventory")}>
+          Ir a Lista de Compras
+        </button>
+      </div>
+    );
+  }
+
+  const todayStr = new Date().toISOString().split("T")[0];
 
   const [form, setForm] = useState({ name: "", selectedCats: [], expiryDate: "", quantity: 1, notes: "", img: "" });
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [saved, setSaved] = useState(false);
   const [scanActive, setScanActive] = useState(false);
-
-  // New category creation
   const [showNewCat, setShowNewCat] = useState(false);
   const [newCatName, setNewCatName] = useState("");
   const [newCatIcon, setNewCatIcon] = useState("🏷️");
@@ -39,9 +58,7 @@ export default function AddProduct() {
     const id = newCatName.toLowerCase().replace(/\s+/g, "_") + "_" + Date.now();
     addCategory({ id, label: { en: newCatName, es: newCatName }, icon: newCatIcon });
     setForm(prev => ({ ...prev, selectedCats: [...prev.selectedCats, id] }));
-    setNewCatName("");
-    setNewCatIcon("🏷️");
-    setShowNewCat(false);
+    setNewCatName(""); setNewCatIcon("🏷️"); setShowNewCat(false);
   };
 
   const handleSave = () => {
@@ -51,7 +68,6 @@ export default function AddProduct() {
       categories: form.selectedCats,
       quantity: parseInt(form.quantity) || 1,
       expiresLabel: form.expiryDate || "Unknown",
-      status: "fresh",
       img: form.img || categories.find(c => c.id === form.selectedCats[0])?.icon || "🛒",
       addedBy: "Me",
       hoursAgo: 0,
@@ -59,6 +75,10 @@ export default function AddProduct() {
     setSaved(true);
     setTimeout(() => { setSaved(false); navigate("/"); }, 1200);
   };
+
+  // Preview status based on chosen date
+  const previewStatus = form.expiryDate ? computeStatus(form.expiryDate) : null;
+  const previewLabel   = form.expiryDate ? friendlyExpiry(form.expiryDate, lang) : null;
 
   return (
     <div className="screen">
@@ -72,15 +92,30 @@ export default function AddProduct() {
         {/* Quick Scan */}
         <div className="section-label">{t("quickScan")}</div>
         <div className="scan-row">
-          <button className={`scan-card ${scanActive === "barcode" ? "scan-active" : ""}`} onClick={() => setScanActive(scanActive === "barcode" ? false : "barcode")}>
+          <button
+            className={`scan-card ${scanActive === "barcode" ? "scan-active" : ""}`}
+            onClick={() => setScanActive(scanActive === "barcode" ? false : "barcode")}
+          >
             <div className="scan-icon">⬛</div>
             <div className="scan-label">{t("scanBarcode")}</div>
           </button>
-          <button className={`scan-card ${scanActive === "photo" ? "scan-active" : ""}`} onClick={() => setScanActive(scanActive === "photo" ? false : "photo")}>
+          <button
+            className={`scan-card ${scanActive === "photo" ? "scan-active" : ""}`}
+            onClick={() => setScanActive(scanActive === "photo" ? false : "photo")}
+          >
             <div className="scan-icon">📷</div>
             <div className="scan-label">{t("uploadPhoto")}</div>
           </button>
         </div>
+
+        {/* Scan hint */}
+        {scanActive && (
+          <div style={{ background: "#f0fdf4", border: "1.5px solid var(--green)", borderRadius: 12, padding: "12px 14px", marginBottom: 16, fontSize: 13, color: "var(--green-dark)", fontWeight: 600 }}>
+            {lang === "es"
+              ? "📱 Integración con cámara disponible en la versión React Native. Por ahora, ingresa los datos manualmente."
+              : "📱 Camera integration available in the React Native version. For now, enter details manually below."}
+          </div>
+        )}
 
         {/* Manual Entry */}
         <div className="section-label">{t("manualEntry")}</div>
@@ -91,7 +126,12 @@ export default function AddProduct() {
             <button className="emoji-square-btn" type="button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
               {form.img || "🛒"}
             </button>
-            <input className="field-input" placeholder={t("productNamePlaceholder")} value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+            <input
+              className="field-input"
+              placeholder={t("productNamePlaceholder")}
+              value={form.name}
+              onChange={e => setForm({ ...form, name: e.target.value })}
+            />
           </div>
           {showEmojiPicker && (
             <div className="emoji-grid" style={{ marginTop: 8 }}>
@@ -101,15 +141,19 @@ export default function AddProduct() {
                   className={`emoji-btn ${form.img === emoji ? "emoji-btn-active" : ""}`}
                   onClick={() => { setForm({ ...form, img: emoji }); setShowEmojiPicker(false); }}
                   type="button"
-                >
-                  {emoji}
-                </button>
+                >{emoji}</button>
               ))}
             </div>
           )}
         </div>
+
         <div className="form-field">
-          <label className="field-label">🏷️ {t("category")} <span style={{ color: "#aaa", fontWeight: 400 }}>({lang === "es" ? "selecciona una o más" : "select one or more"})</span></label>
+          <label className="field-label">
+            🏷️ {t("category")}{" "}
+            <span style={{ color: "#aaa", fontWeight: 400 }}>
+              ({lang === "es" ? "selecciona una o más" : "select one or more"})
+            </span>
+          </label>
           <div className="cat-chips" style={{ marginTop: 6 }}>
             {categories.map(cat => (
               <button
@@ -125,8 +169,6 @@ export default function AddProduct() {
               <Plus size={12} /> {lang === "es" ? "Nueva" : "New"}
             </button>
           </div>
-
-          {/* Selected preview */}
           {form.selectedCats.length > 0 && (
             <div className="selected-cats-preview" style={{ marginTop: 8 }}>
               {form.selectedCats.map(id => (
@@ -139,7 +181,6 @@ export default function AddProduct() {
           )}
         </div>
 
-        {/* New category form */}
         {showNewCat && (
           <div className="new-cat-form">
             <div className="new-cat-title">{lang === "es" ? "Crear categoría" : "Create category"}</div>
@@ -158,9 +199,7 @@ export default function AddProduct() {
                   className={`emoji-btn ${newCatIcon === emoji ? "emoji-btn-active" : ""}`}
                   onClick={() => setNewCatIcon(emoji)}
                   type="button"
-                >
-                  {emoji}
-                </button>
+                >{emoji}</button>
               ))}
             </div>
             <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
@@ -174,20 +213,47 @@ export default function AddProduct() {
           </div>
         )}
 
-        <div className="form-row">
-          <div className="form-field form-field-half">
+        {/* Date + Quantity row */}
+        <div style={{ display: "flex", gap: 12 }}>
+          <div className="form-field" style={{ flex: 1 }}>
             <label className="field-label">📅 {t("expiryDate")}</label>
-            <input className="field-input" type="date" value={form.expiryDate} min={new Date().toISOString().split("T")[0]} onChange={e => setForm({ ...form, expiryDate: e.target.value })} />
+            <input
+              className="field-input"
+              type="date"
+              value={form.expiryDate}
+              min={todayStr}
+              onChange={e => setForm({ ...form, expiryDate: e.target.value })}
+            />
+            {/* Real-time status preview */}
+            {previewStatus && (
+              <div style={{ marginTop: 6, display: "flex", alignItems: "center", gap: 6 }}>
+                <span className={`expires-chip expires-${previewStatus}`}>{previewLabel}</span>
+                <span style={{ fontSize: 11, color: "var(--text-sub)" }}>
+                  {previewStatus === "fresh" ? "✅" : previewStatus === "warning" ? "⚠️" : previewStatus === "expiring" ? "🔶" : "🔴"}
+                </span>
+              </div>
+            )}
           </div>
-          <div className="form-field form-field-half">
+          <div className="form-field" style={{ flex: 1 }}>
             <label className="field-label">🔢 {t("quantity")}</label>
-            <input className="field-input" type="text" inputMode="numeric" value={form.quantity} onChange={e => setForm({ ...form, quantity: e.target.value })} style={{ appearance: "textfield", MozAppearance: "textfield" }} />
+            <input
+              className="field-input"
+              type="text"
+              inputMode="numeric"
+              value={form.quantity}
+              onChange={e => setForm({ ...form, quantity: e.target.value })}
+            />
           </div>
         </div>
 
         <div className="form-field">
           <label className="field-label">📝 {t("notes")}</label>
-          <textarea className="field-input field-textarea" placeholder={t("notesPlaceholder")} value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
+          <textarea
+            className="field-input field-textarea"
+            placeholder={t("notesPlaceholder")}
+            value={form.notes}
+            onChange={e => setForm({ ...form, notes: e.target.value })}
+          />
         </div>
 
         <button
@@ -198,6 +264,14 @@ export default function AddProduct() {
           <CheckCircle size={18} />
           {saved ? (lang === "es" ? "¡Guardado!" : "Saved!") : t("saveProduct")}
         </button>
+
+        {(!form.name || form.selectedCats.length === 0) && (
+          <div style={{ textAlign: "center", fontSize: 12, color: "var(--text-sub)", marginTop: 8 }}>
+            {lang === "es"
+              ? "Nombre y al menos una categoría son obligatorios"
+              : "Name and at least one category are required"}
+          </div>
+        )}
       </div>
     </div>
   );
