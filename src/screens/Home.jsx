@@ -18,7 +18,7 @@ export default function Home() {
 
   const getCatLabel = (catId) => {
     const cat = categories.find(c => c.id === catId);
-    return cat ? (cat.label[lang] || cat.label.en) : catId;
+    return cat ? (cat.label.es || cat.label.en) : catId;
   };
 
   return (
@@ -66,7 +66,7 @@ export default function Home() {
       {search && (
         <div className="search-results">
           {filteredItems.length === 0 ? (
-            <div className="no-results">{lang === "es" ? "Sin resultados" : "No items found"}</div>
+            <div className="no-results">Sin resultados</div>
           ) : (
             filteredItems.map(item => (
               <div key={item.id} className="search-result-item" onClick={() => navigate("/inventory")} style={{ cursor: "pointer" }}>
@@ -102,7 +102,7 @@ export default function Home() {
       <div className="expiring-list">
         {expiringSoon.length === 0 ? (
           <div style={{ background: "white", borderRadius: 14, padding: "16px 14px", textAlign: "center", color: "var(--text-sub)", fontSize: 13, boxShadow: "var(--shadow)" }}>
-            {lang === "es" ? "✅ ¡Todo fresco! Sin alertas de vencimiento." : "✅ All fresh! No expiry alerts."}
+            ✅ ¡Todo fresco! Sin alertas de vencimiento.
           </div>
         ) : (
           expiringSoon.slice(0, 2).map(item => (
@@ -155,7 +155,7 @@ export default function Home() {
       <div className="activity-list">
         {activity.length === 0 && (
           <div style={{ padding: "16px", textAlign: "center", color: "var(--text-sub)", fontSize: "13px" }}>
-            {lang === "es" ? "Aún no hay actividad registrada." : "No activity yet."}
+            Aún no hay actividad registrada.
           </div>
         )}
         {activity.map(item => (

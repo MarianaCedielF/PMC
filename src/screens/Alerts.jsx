@@ -1,12 +1,22 @@
 import { useData } from "../data";
 import { useLang } from "../i18n";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getMatchingRecipes } from "./Recipes";
 
 const TABS = ["all", "expiringSoon", "expired", "tips"];
 
+const TAB_LABELS = {
+  all: "Todos",
+  expiringSoon: "Próximas a vencer",
+  expired: "Caducadas",
+  tips: "Consejos",
+};
+
 export default function Alerts() {
-  const { notifications, actionNotification } = useData();
-  const { t, lang } = useLang();
+  const { notifications, actionNotification, pantryItems, categories } = useData();
+  const { t } = useLang();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("all");
 
   const todayNotifs     = notifications.filter(n => n.section === "today");
@@ -23,8 +33,8 @@ export default function Alerts() {
   const todayFiltered     = filterNotif(todayNotifs);
   const yesterdayFiltered = filterNotif(yesterdayNotifs);
 
-  const dayLabel     = lang === "es" ? "HOY"  : "TODAY";
-  const yesterLabel  = lang === "es" ? "AYER" : "YESTERDAY";
+  const matchingRecipes = getMatchingRecipes(pantryItems, categories);
+  const firstRecipe = matchingRecipes[0];
 
   return (
     <div className="screen">
@@ -41,25 +51,37 @@ export default function Alerts() {
             className={`tab-btn-alert ${activeTab === tab ? "tab-alert-active" : ""}`}
             onClick={() => setActiveTab(tab)}
           >
-            {tab === "expired" ? t("expiredLabel") : t(tab)}
+            {TAB_LABELS[tab]}
           </button>
         ))}
       </div>
 
       {todayFiltered.length > 0 && (
         <>
-          <div className="day-label">{dayLabel}</div>
+          <div className="day-label">HOY</div>
           {todayFiltered.map(notif => (
-            <NotifCard key={notif.id} notif={notif} t={t} lang={lang} onAction={actionNotification} />
+            <NotifCard
+              key={notif.id}
+              notif={notif}
+              t={t}
+              onAction={actionNotification}
+              onViewRecipe={() => firstRecipe ? navigate(`/recipes/${firstRecipe.id}`) : navigate("/recipes")}
+            />
           ))}
         </>
       )}
 
       {yesterdayFiltered.length > 0 && (
         <>
-          <div className="day-label">{yesterLabel}</div>
+          <div className="day-label">AYER</div>
           {yesterdayFiltered.map(notif => (
-            <NotifCard key={notif.id} notif={notif} t={t} lang={lang} onAction={actionNotification} />
+            <NotifCard
+              key={notif.id}
+              notif={notif}
+              t={t}
+              onAction={actionNotification}
+              onViewRecipe={() => firstRecipe ? navigate(`/recipes/${firstRecipe.id}`) : navigate("/recipes")}
+            />
           ))}
         </>
       )}
@@ -67,16 +89,14 @@ export default function Alerts() {
       {todayFiltered.length === 0 && yesterdayFiltered.length === 0 && (
         <div className="empty-state">
           <div className="empty-emoji">✅</div>
-          <div className="empty-text">
-            {lang === "es" ? "¡Todo en orden! Sin notificaciones." : "All clear! No notifications here."}
-          </div>
+          <div className="empty-text">¡Todo en orden! Sin notificaciones.</div>
         </div>
       )}
     </div>
   );
 }
 
-function NotifCard({ notif, t, lang, onAction }) {
+function NotifCard({ notif, t, onAction, onViewRecipe }) {
   const isExpired = notif.type === "expired";
   const isTip     = notif.type === "tip";
 
@@ -99,7 +119,9 @@ function NotifCard({ notif, t, lang, onAction }) {
               <button className="notif-btn-green" onClick={() => onAction(notif.id)}>
                 {t("markAsUsed")}
               </button>
-              <button className="notif-btn-outline">{t("viewRecipe")}</button>
+              <button className="notif-btn-outline" onClick={onViewRecipe}>
+                {t("viewRecipe")}
+              </button>
             </>
           )}
           {notif.type === "expired" && (

@@ -315,6 +315,52 @@ input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin
 
 @media (max-width: 420px) { .mobile-frame { border-radius: 0; max-width: 100%; } }
 
+/* ─── Camera modal ───────────────────────────────────────────────── */
+.camera-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
+.camera-modal { background: #111; border-radius: 24px 24px 0 0; width: 100%; max-width: 390px; overflow: hidden; }
+.camera-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: rgba(255,255,255,0.06); }
+.camera-title { color: white; font-size: 14px; font-weight: 700; flex: 1; text-align: center; }
+.camera-close-btn { background: rgba(255,255,255,0.12); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.camera-viewfinder { position: relative; width: 100%; aspect-ratio: 4/3; background: black; overflow: hidden; }
+.camera-video { width: 100%; height: 100%; object-fit: cover; }
+.scan-frame { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.scan-frame::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 62%; height: 38%; border: 2.5px solid var(--green); border-radius: 12px; box-shadow: 0 0 0 2000px rgba(0,0,0,0.35); }
+.scan-line { position: absolute; left: 19%; width: 62%; height: 2px; background: linear-gradient(to right, transparent, var(--green), transparent); animation: scanMove 2s ease-in-out infinite; }
+@keyframes scanMove { 0%, 100% { top: 33%; } 50% { top: 65%; } }
+.scan-success-overlay { position: absolute; inset: 0; background: rgba(34,197,94,0.15); display: flex; align-items: center; justify-content: center; }
+.scan-success-icon { font-size: 64px; animation: popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275); }
+@keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.camera-hint { color: #bbb; font-size: 13px; text-align: center; padding: 14px 20px 20px; line-height: 1.4; }
+
+/* ─── Supermarket page ───────────────────────────────────────────── */
+.supermarket-hero { background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: 16px; padding: 18px 20px; margin-bottom: 20px; color: white; display: flex; align-items: center; gap: 16px; box-shadow: 0 4px 20px rgba(34,197,94,0.35); }
+.supermarket-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.supermarket-card { border: 2px solid var(--border); border-radius: 14px; padding: 14px 12px; cursor: pointer; font-family: inherit; text-align: left; transition: all 0.15s; background: white; box-shadow: var(--shadow); }
+.supermarket-card:hover { transform: translateY(-1px); }
+.supermarket-card-active { transform: translateY(-1px); }
+.order-items-list { background: white; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 20px; }
+.order-item-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; }
+.order-item-emoji { width: 36px; height: 36px; background: #f0fdf4; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.delivery-option { display: flex; align-items: center; gap: 12px; background: white; border: 1.5px solid var(--border); border-radius: 14px; padding: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; box-shadow: var(--shadow); }
+.delivery-option-active { background: var(--green-light); border-color: var(--green); }
+.radio-circle { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.15s; }
+.radio-circle-active { border-color: var(--green); background: var(--green); }
+.radio-dot { width: 8px; height: 8px; background: white; border-radius: 50%; display: block; }
+.order-summary { background: white; border-radius: 16px; padding: 18px; box-shadow: var(--shadow); margin-bottom: 20px; }
+.summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 8px; }
+
+/* ─── Order button in Inventory ──────────────────────────────────── */
+.order-supermarket-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, #22c55e, #16a34a); color: white; border: none; border-radius: 16px; padding: 16px; font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(34,197,94,0.35); transition: all 0.2s; }
+.order-supermarket-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(34,197,94,0.45); }
+.order-btn-badge { background: rgba(255,255,255,0.25); border-radius: 20px; padding: 2px 10px; font-size: 13px; font-weight: 700; }
+
+/* ─── AI badge ───────────────────────────────────────────────────── */
+.ai-badge { font-size: 10px; font-weight: 700; background: linear-gradient(135deg, #8b5cf6, #2563eb); color: white; border-radius: 10px; padding: 2px 7px; display: inline-flex; align-items: center; gap: 2px; vertical-align: middle; }
+
+/* ─── Animations ─────────────────────────────────────────────────── */
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.spin-icon { display: inline-block; animation: spin 1s linear infinite; }
+
 /* ─── Mejoras adicionales ─────────────────────────────────────────── */
 
 /* form-row en una fila horizontal */

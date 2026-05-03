@@ -24,7 +24,6 @@ const translations = {
   alerts: "Alertas",
   profile: "Perfil",
   add: "Añadir",
-  // Pantry screen
   householdSharedList: "Lista Compartida del Hogar",
   allItems: "Todos",
   produce: "Frutas y Verduras",
@@ -33,7 +32,6 @@ const translations = {
   addSomething: "Añadir algo para comprar...",
   shoppingListTitle: "Lista de Compras",
   addedBy: "Añadido por",
-  // Add product screen
   addProduct: "Agregar Producto",
   quickScan: "Escaneo Rápido",
   scanBarcode: "Escanear Código",
@@ -54,7 +52,6 @@ const translations = {
   frozen: "Congelados",
   other: "Otros",
   productNamePlaceholder: "p.ej. Leche Orgánica",
-  // Alerts screen
   notifications: "Notificaciones",
   all: "Todos",
   tips: "Consejos",
@@ -63,7 +60,6 @@ const translations = {
   removeFromPantry: "Eliminar de Despensa",
   yesterday: "Ayer",
   freshnesseTip: "Consejo de Frescura",
-  // Profile screen
   householdOwner: "Propietario del Hogar",
   inviteNewMember: "Invitar Nuevo Miembro",
   activeMembers: "MIEMBROS ACTIVOS",
@@ -75,7 +71,7 @@ const translations = {
   joined: "Se unió",
   invitePending: "Invitación pendiente",
   sent: "Enviado",
-  cancel: "CANCELAR",
+  cancel: "Cancelar",
   hoursAgo: "horas atrás",
   daysAgo: "días atrás",
   weeksAgo: "semanas atrás",
@@ -100,13 +96,17 @@ const translations = {
   recipeSteps: "Pasos",
   recipeTime: "Tiempo de preparación",
   tryRecipe: "¡Lo hice!",
+  makeOrder: "Realizar Compra",
+  orderTitle: "Pedir al Supermercado",
+  aiSuggested: "Sugerido por IA",
+  expiringSoon_tab: "Próximas a vencer",
 };
 
 const LangContext = createContext();
 
 export function LangProvider({ children }) {
   const lang = "es";
-  const t = (key) => translations[key] || key;
+  const t = (key) => translations[key] ?? key;
   return (
     <LangContext.Provider value={{ lang, t }}>
       {children}

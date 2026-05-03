@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Trash2, X, Plus, Minus } from "lucide-react";
+import { Trash2, X, Plus, Minus, ShoppingCart } from "lucide-react";
 import { useData } from "../data";
 import { friendlyExpiry } from "../data";
 import { useLang } from "../i18n";
@@ -25,7 +25,7 @@ export default function Inventory() {
 
   const getCatLabel = (catId) => {
     const cat = categories.find(c => c.id === catId);
-    return cat ? (cat.label[lang] || cat.label.en) : catId;
+    return cat ? (cat.label.es || cat.label.en) : catId;
   };
   const getCatIcon = (catId) => {
     const cat = categories.find(c => c.id === catId);
@@ -35,7 +35,7 @@ export default function Inventory() {
   const usedCatIds = ["all", ...new Set(pantryItems.flatMap(i => i.categories || []))];
   const tabs = usedCatIds.map(id => ({
     id,
-    label: id === "all" ? (lang === "es" ? "Todos" : "All") : getCatLabel(id),
+    label: id === "all" ? "Todos" : getCatLabel(id),
     icon: id === "all" ? "☰" : getCatIcon(id),
   }));
 
@@ -65,7 +65,7 @@ export default function Inventory() {
     <div className="screen">
       <div className="header header-simple">
         <div style={{ width: 32 }} />
-        <span className="page-title">{lang === "es" ? "Inventario" : "Inventory"}</span>
+        <span className="page-title">Inventario</span>
         <div style={{ width: 32 }} />
       </div>
 
@@ -81,7 +81,7 @@ export default function Inventory() {
 
       {/* Pantry items */}
       <div className="section-label" style={{ marginBottom: 8 }}>
-        {lang === "es" ? "Artículos en despensa" : "Pantry items"}
+        Artículos en despensa
         <span style={{ marginLeft: 8, fontSize: 12, fontWeight: 500, color: "var(--text-sub)" }}>
           ({filteredItems.length})
         </span>
@@ -90,7 +90,7 @@ export default function Inventory() {
       <div className="pantry-items-list">
         {filteredItems.length === 0 && (
           <div style={{ background: "white", borderRadius: 14, padding: "20px", textAlign: "center", color: "var(--text-sub)", fontSize: 13, boxShadow: "var(--shadow)" }}>
-            {lang === "es" ? "Sin artículos en esta categoría." : "No items in this category."}
+            Sin artículos en esta categoría.
           </div>
         )}
         {filteredItems.map(item => (
@@ -100,7 +100,7 @@ export default function Inventory() {
               <div className="item-name">{item.name}</div>
               <div className="item-detail">{item.categories?.map(getCatLabel).join(" · ")}</div>
               <div className="item-detail" style={{ marginTop: 2 }}>
-                {lang === "es" ? "Añadido por" : "Added by"} {item.addedBy}
+                Añadido por {item.addedBy}
               </div>
             </div>
             <div className="pantry-item-expires">
@@ -154,15 +154,13 @@ export default function Inventory() {
           onKeyDown={e => e.key === "Enter" && handleAdd()}
         />
         {newItem.trim() && (
-          <button className="add-btn-green" onClick={handleAdd}>
-            {lang === "es" ? "Añadir" : "Add"}
-          </button>
+          <button className="add-btn-green" onClick={handleAdd}>Añadir</button>
         )}
       </div>
 
       {showCatPicker && (
         <div className="cat-picker">
-          <div className="cat-picker-label">{lang === "es" ? "Categorías" : "Categories"}</div>
+          <div className="cat-picker-label">Categorías</div>
           <div className="cat-chips">
             {categories.map(cat => (
               <button
@@ -170,17 +168,17 @@ export default function Inventory() {
                 className={`cat-chip ${selectedCats.includes(cat.id) ? "cat-chip-active" : ""}`}
                 onClick={() => toggleCat(cat.id)}
               >
-                {cat.icon} {cat.label[lang] || cat.label.en}
+                {cat.icon} {cat.label.es || cat.label.en}
               </button>
             ))}
           </div>
         </div>
       )}
 
-      <div className="shopping-list" style={{ marginBottom: 24 }}>
+      <div className="shopping-list" style={{ marginBottom: 16 }}>
         {shoppingList.length === 0 && (
           <div style={{ textAlign: "center", color: "var(--text-sub)", fontSize: 13, padding: "20px 0" }}>
-            {lang === "es" ? "La lista de compras está vacía." : "Your shopping list is empty."}
+            La lista de compras está vacía.
           </div>
         )}
         {shoppingList.map(item => (
@@ -192,15 +190,20 @@ export default function Inventory() {
               {item.checked ? "✓" : ""}
             </button>
             <div className="shopping-info">
-              <div className={`item-name ${item.checked ? "strikethrough" : ""}`}>{item.name}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span className={`item-name ${item.checked ? "strikethrough" : ""}`}>{item.name}</span>
+                {item.aiSuggested && (
+                  <span className="ai-badge">✨ IA</span>
+                )}
+              </div>
               <div className="item-detail">{t("addedBy")} {item.addedBy}</div>
             </div>
             <div className="shopping-right">
               <div
                 className="avatar-sm"
-                style={{ background: avatarColors[item.avatar] || "#ccc" }}
+                style={{ background: item.aiSuggested ? "linear-gradient(135deg, #8b5cf6, #2563eb)" : (avatarColors[item.avatar] || "#ccc") }}
               >
-                {item.avatar}
+                {item.aiSuggested ? "✨" : item.avatar}
               </div>
               <button onClick={() => removeShoppingItem(item.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#bbb", padding: 4 }}>
                 <X size={14} />
@@ -209,6 +212,16 @@ export default function Inventory() {
           </div>
         ))}
       </div>
+
+      {/* Order button */}
+      <button
+        className="order-supermarket-btn"
+        onClick={() => navigate("/supermarket")}
+      >
+        <ShoppingCart size={20} />
+        <span>Realizar Compra</span>
+        <span className="order-btn-badge">{shoppingList.filter(i => !i.checked).length}</span>
+      </button>
 
       {/* Consume modal */}
       {consumeModal && (

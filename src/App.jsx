@@ -10,6 +10,7 @@ import Alerts from "./screens/Alerts";
 import Profile from "./screens/Profile";
 import Recipes from "./screens/Recipes";
 import RecipeDetail from "./screens/RecipeDetail";
+import Supermarket from "./screens/Supermarket";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import "./App.css";
@@ -42,6 +43,7 @@ function AppLayout() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/recipes" element={<Recipes />} />
             <Route path="/recipes/:id" element={<RecipeDetail />} />
+            <Route path="/supermarket" element={<Supermarket />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </div>

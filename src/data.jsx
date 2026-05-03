@@ -32,7 +32,7 @@ export function computeStatus(expiresLabel) {
   return "fresh";
 }
 
-export function friendlyExpiry(dateStr, lang = "en") {
+export function friendlyExpiry(dateStr, lang = "es") {
   if (!dateStr || dateStr === "Unknown") return dateStr;
   const parsed = new Date(dateStr);
   if (isNaN(parsed.getTime())) return dateStr;
@@ -40,20 +40,12 @@ export function friendlyExpiry(dateStr, lang = "en") {
   today.setHours(0, 0, 0, 0);
   parsed.setHours(0, 0, 0, 0);
   const diffDays = Math.round((parsed - today) / (1000 * 60 * 60 * 24));
-  if (lang === "es") {
-    if (diffDays < 0)   return "Caducado";
-    if (diffDays === 0) return "Hoy";
-    if (diffDays === 1) return "Mañana";
-    if (diffDays <= 7)  return `${diffDays} días`;
-    if (diffDays <= 30) return `${Math.round(diffDays / 7)} semanas`;
-    return `${Math.round(diffDays / 30)} meses`;
-  }
-  if (diffDays < 0)   return "Expired";
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Tomorrow";
-  if (diffDays <= 7)  return `${diffDays} days`;
-  if (diffDays <= 30) return `${Math.round(diffDays / 7)} weeks`;
-  return `${Math.round(diffDays / 30)} months`;
+  if (diffDays < 0)   return "Caducado";
+  if (diffDays === 0) return "Hoy";
+  if (diffDays === 1) return "Mañana";
+  if (diffDays <= 7)  return `${diffDays} días`;
+  if (diffDays <= 30) return `${Math.round(diffDays / 7)} semanas`;
+  return `${Math.round(diffDays / 30)} meses`;
 }
 
 const d = (offset) => {
@@ -64,26 +56,46 @@ const d = (offset) => {
 const todayStr = new Date().toISOString().split("T")[0];
 
 const initialPantryItems = [
-  { id: 1,  name: "Whole Milk",      quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: todayStr, img: "🥛", addedBy: "Sarah", hoursAgo: 2  },
-  { id: 2,  name: "Strawberries",    quantity: 2,  categories: ["produce","fridge"],   expiresLabel: d(1),    img: "🍓", addedBy: "James", hoursAgo: 5  },
-  { id: 3,  name: "Free-range Eggs", quantity: 12, categories: ["dairy","fridge"],     expiresLabel: d(5),    img: "🥚", addedBy: "Sarah", hoursAgo: 2  },
-  { id: 4,  name: "Ground Coffee",   quantity: 1,  categories: ["beverages","pantry"], expiresLabel: d(90),   img: "☕", addedBy: "David", hoursAgo: 26 },
-  { id: 5,  name: "Organic Milk",    quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: todayStr, img: "🥛", addedBy: "Sarah", hoursAgo: 3  },
-  { id: 6,  name: "Greek Yogurt",    quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(-1),   img: "🫙", addedBy: "Me",    hoursAgo: 5  },
-  { id: 7,  name: "Sourdough Bread", quantity: 1,  categories: ["bakery","pantry"],    expiresLabel: d(2),    img: "🍞", addedBy: "Sarah", hoursAgo: 1  },
-  { id: 8,  name: "Avocados",        quantity: 3,  categories: ["produce","pantry"],   expiresLabel: d(3),    img: "🥑", addedBy: "James", hoursAgo: 4  },
-  { id: 9,  name: "Baby Spinach",    quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(2),    img: "🥬", addedBy: "Me",    hoursAgo: 26 },
-  { id: 10, name: "Cheddar Cheese",  quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(7),    img: "🧀", addedBy: "David", hoursAgo: 48 },
+  // Expiring today
+  { id: 1,  name: "Leche Entera",         quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: todayStr, img: "🥛", addedBy: "Sarah", hoursAgo: 2  },
+  { id: 5,  name: "Leche Orgánica",        quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: todayStr, img: "🥛", addedBy: "Sarah", hoursAgo: 3  },
+  { id: 23, name: "Tortillas de Maíz",     quantity: 6,  categories: ["bakery","pantry"],    expiresLabel: todayStr, img: "🌮", addedBy: "Sarah", hoursAgo: 8  },
+  // Warning (1–3 days)
+  { id: 2,  name: "Fresas",               quantity: 2,  categories: ["produce","fridge"],   expiresLabel: d(1),    img: "🍓", addedBy: "James", hoursAgo: 5  },
+  { id: 7,  name: "Pan de Masa Madre",     quantity: 1,  categories: ["bakery","pantry"],    expiresLabel: d(2),    img: "🍞", addedBy: "Sarah", hoursAgo: 1  },
+  { id: 8,  name: "Aguacates",             quantity: 3,  categories: ["produce","pantry"],   expiresLabel: d(3),    img: "🥑", addedBy: "James", hoursAgo: 4  },
+  { id: 9,  name: "Espinaca Baby",         quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(2),    img: "🥬", addedBy: "Me",    hoursAgo: 26 },
+  { id: 18, name: "Bananos",              quantity: 5,  categories: ["produce","pantry"],   expiresLabel: d(1),    img: "🍌", addedBy: "James", hoursAgo: 6  },
+  // Fresh
+  { id: 3,  name: "Huevos de Campo",       quantity: 12, categories: ["dairy","fridge"],     expiresLabel: d(5),    img: "🥚", addedBy: "Sarah", hoursAgo: 2  },
+  { id: 4,  name: "Café Molido",           quantity: 1,  categories: ["beverages","pantry"], expiresLabel: d(90),   img: "☕", addedBy: "David", hoursAgo: 26 },
+  { id: 10, name: "Queso Cheddar",         quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(7),    img: "🧀", addedBy: "David", hoursAgo: 48 },
+  { id: 11, name: "Pechuga de Pollo",      quantity: 2,  categories: ["meat","fridge"],      expiresLabel: d(5),    img: "🥩", addedBy: "James", hoursAgo: 10 },
+  { id: 12, name: "Jugo de Naranja",       quantity: 1,  categories: ["beverages","fridge"], expiresLabel: d(12),   img: "🍊", addedBy: "Sarah", hoursAgo: 7  },
+  { id: 13, name: "Mantequilla",           quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(25),   img: "🧈", addedBy: "David", hoursAgo: 48 },
+  { id: 14, name: "Arvejas Congeladas",    quantity: 2,  categories: ["frozen"],             expiresLabel: d(120),  img: "🧊", addedBy: "Sarah", hoursAgo: 72 },
+  { id: 15, name: "Manzanas",             quantity: 4,  categories: ["produce","fridge"],   expiresLabel: d(14),   img: "🍎", addedBy: "James", hoursAgo: 12 },
+  { id: 16, name: "Zanahorias",           quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(10),   img: "🥕", addedBy: "Me",    hoursAgo: 20 },
+  { id: 17, name: "Salsa de Tomate",       quantity: 2,  categories: ["other","pantry"],     expiresLabel: d(120),  img: "🍅", addedBy: "David", hoursAgo: 96 },
+  // Expired
+  { id: 6,  name: "Yogur Griego",          quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(-1),   img: "🫙", addedBy: "Me",    hoursAgo: 5  },
+  { id: 19, name: "Tomates Cherry",        quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(-2),   img: "🍅", addedBy: "Sarah", hoursAgo: 72 },
+  { id: 20, name: "Crema de Leche",        quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(-1),   img: "🫙", addedBy: "David", hoursAgo: 48 },
+  { id: 21, name: "Jamón de Pierna",       quantity: 1,  categories: ["meat","fridge"],      expiresLabel: d(-3),   img: "🍖", addedBy: "James", hoursAgo: 96 },
+  { id: 22, name: "Champiñones",           quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(-1),   img: "🍄", addedBy: "Me",    hoursAgo: 36 },
 ].map(i => ({ ...i, status: computeStatus(i.expiresLabel) }));
 
 const initialShoppingList = [
-  { id: 1, name: "Organic Whole Milk", quantity: 1, categories: ["dairy","fridge"],   addedBy: "Sarah", avatar: "S",  checked: false },
-  { id: 2, name: "Avocados (Ripe)",    quantity: 3, categories: ["produce","pantry"], addedBy: "James", avatar: "J",  checked: false },
-  { id: 3, name: "Sourdough Bread",    quantity: 1, categories: ["bakery","pantry"],  addedBy: "Sarah", avatar: "S",  checked: false },
-  { id: 4, name: "Greek Yogurt",       categories:  ["dairy","fridge"],               addedBy: "Me",    avatar: "ME", checked: false },
+  { id: 1, name: "Leche Entera Orgánica",  quantity: 1,  categories: ["dairy","fridge"],    addedBy: "Sarah", avatar: "S",  checked: false },
+  { id: 2, name: "Aguacates (Maduros)",    quantity: 3,  categories: ["produce","pantry"],  addedBy: "James", avatar: "J",  checked: false },
+  { id: 3, name: "Pan de Masa Madre",      quantity: 1,  categories: ["bakery","pantry"],   addedBy: "Sarah", avatar: "S",  checked: false },
+  { id: 4, name: "Yogur Griego",           quantity: 1,  categories: ["dairy","fridge"],    addedBy: "Me",    avatar: "ME", checked: false },
+  { id: 5, name: "Huevos de Campo",        quantity: 12, categories: ["dairy","fridge"],    addedBy: "IA FreshKeeper", avatar: "AI", checked: false, aiSuggested: true },
+  { id: 6, name: "Espinaca Baby",          quantity: 1,  categories: ["produce","fridge"],  addedBy: "IA FreshKeeper", avatar: "AI", checked: false, aiSuggested: true },
+  { id: 7, name: "Café Molido",            quantity: 1,  categories: ["beverages","pantry"],addedBy: "IA FreshKeeper", avatar: "AI", checked: false, aiSuggested: true },
 ];
 
-const STORAGE_KEY = "freshkeeper_v2";
+const STORAGE_KEY = "freshkeeper_v3";
 function loadState() {
   try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : null; } catch { return null; }
 }
@@ -104,15 +116,22 @@ export function DataProvider({ children }) {
   const [shoppingList,  setShoppingList]  = useState(saved?.shoppingList  ?? initialShoppingList);
   const [categories,    setCategories]    = useState(saved?.categories     ?? DEFAULT_CATEGORIES);
   const [activity,      setActivity]      = useState(saved?.activity       ?? [
-    { id: 1, name: "Free-range Eggs", user: "Sarah", time: "1 hour ago",  status: "added",    emoji: "🥚" },
-    { id: 2, name: "Avocados",         user: "James", time: "2 hours ago", status: "consumed", emoji: "🥑" },
-    { id: 3, name: "Cheddar Cheese",   user: "David", time: "Yesterday",   status: "added",    emoji: "🧀" },
+    { id: 1, name: "Huevos de Campo",   user: "Sarah", time: "Hace 1 hora",   status: "added",    emoji: "🥚" },
+    { id: 2, name: "Aguacates",          user: "James", time: "Hace 2 horas",  status: "consumed", emoji: "🥑" },
+    { id: 3, name: "Pechuga de Pollo",   user: "James", time: "Hace 3 horas",  status: "added",    emoji: "🥩" },
+    { id: 4, name: "Manzanas",           user: "Sarah", time: "Hace 4 horas",  status: "added",    emoji: "🍎" },
+    { id: 5, name: "Queso Cheddar",      user: "David", time: "Ayer",          status: "added",    emoji: "🧀" },
+    { id: 6, name: "Leche Entera",       user: "Sarah", time: "Ayer",          status: "consumed", emoji: "🥛" },
   ]);
   const [notifications, setNotifications] = useState(saved?.notifications ?? [
-    { id: 1, type: "expiring", item: "Organic Whole Milk",  msg: "Expires today! Use it for cereal or making a quick béchamel sauce.",     time: "2h ago", section: "today",     img: "🥛", actioned: false },
-    { id: 2, type: "expired",  item: "Greek Yogurt (500g)", msg: "Expired yesterday. Please check if it's still good or compost it.",      time: "5h ago", section: "today",     img: "🫙", actioned: false },
-    { id: 3, type: "tip",      item: "Freshness Tip",       msg: "Store your tomatoes at room temperature to keep them flavorful longer!", time: "1d ago", section: "yesterday", img: null },
-    { id: 4, type: "expiring", item: "Baby Spinach",        msg: "Expiring in 2 days. Perfect for a morning smoothie!",                    time: "1d ago", section: "yesterday", img: "🥬", actioned: false },
+    { id: 1, type: "expiring", item: "Leche Orgánica",    msg: "¡Vence hoy! Úsala para el cereal o para preparar una salsa cremosa.",         time: "Hace 2h",  section: "today",     img: "🥛", actioned: false },
+    { id: 2, type: "expired",  item: "Yogur Griego",      msg: "Venció ayer. Revisa si aún está en buen estado o descártalo.",                 time: "Hace 5h",  section: "today",     img: "🫙", actioned: false },
+    { id: 3, type: "expiring", item: "Bananos",           msg: "¡Vencen mañana! Perfectos para hacer pan de banano o un batido.",              time: "Hace 4h",  section: "today",     img: "🍌", actioned: false },
+    { id: 4, type: "expired",  item: "Tomates Cherry",    msg: "Caducados hace 2 días. Revisa si aún sirven o compóstalos.",                   time: "Hace 3h",  section: "today",     img: "🍅", actioned: false },
+    { id: 5, type: "tip",      item: "Consejo de Frescura", msg: "¡Guarda los tomates a temperatura ambiente para mantenerlos más sabrosos!", time: "Hace 1d",  section: "yesterday", img: null  },
+    { id: 6, type: "expiring", item: "Espinaca Baby",     msg: "Vence en 2 días. ¡Perfecta para un batido matutino o una ensalada rápida!",   time: "Hace 1d",  section: "yesterday", img: "🥬", actioned: false },
+    { id: 7, type: "expired",  item: "Jamón de Pierna",   msg: "Caducado hace 3 días. No consumir. Descarta antes de usar.",                  time: "Hace 1d",  section: "yesterday", img: "🍖", actioned: false },
+    { id: 8, type: "tip",      item: "Consejo de Frescura", msg: "Envuelve el pan en papel aluminio para que se conserve fresco por más tiempo en la despensa.", time: "Hace 2d", section: "yesterday", img: null },
   ]);
 
   useEffect(() => {
@@ -127,7 +146,7 @@ export function DataProvider({ children }) {
 
   const logActivity = (item, status) => {
     setActivity(prev => [{
-      id: Date.now(), name: item.name, user: "Me", time: "Just now", status, emoji: item.img || "🛒",
+      id: Date.now(), name: item.name, user: "Me", time: "Justo ahora", status, emoji: item.img || "🛒",
     }, ...prev].slice(0, 10));
   };
 

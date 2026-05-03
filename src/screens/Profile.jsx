@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Settings, RotateCcw, LogOut, UserPlus, ChevronDown } from "lucide-react";
+import { RotateCcw, LogOut, UserPlus, ChevronDown } from "lucide-react";
 import { useLang } from "../i18n";
 import { useData } from "../data";
 import { useAuth, usePermissions, ROLES, PERM_LABELS } from "../auth";
@@ -139,12 +139,6 @@ export default function Profile() {
             <RotateCcw size={16} color="#ef4444" />
           </button>
         )}
-        <button
-          className="settings-btn"
-          title="Configuración"
-        >
-          <Settings size={18} color="#666" />
-        </button>
         <button
           className="settings-btn"
           onClick={() => setShowLogout(true)}
