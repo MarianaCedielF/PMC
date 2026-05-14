@@ -56,33 +56,32 @@ const d = (offset) => {
 const todayStr = new Date().toISOString().split("T")[0];
 
 const initialPantryItems = [
-  // Expiring today
-  { id: 1,  name: "Leche Entera",         quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: todayStr, img: "🥛", addedBy: "Sarah", hoursAgo: 2  },
-  { id: 5,  name: "Leche Orgánica",        quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: todayStr, img: "🥛", addedBy: "Sarah", hoursAgo: 3  },
-  { id: 23, name: "Tortillas de Maíz",     quantity: 6,  categories: ["bakery","pantry"],    expiresLabel: todayStr, img: "🌮", addedBy: "Sarah", hoursAgo: 8  },
-  // Warning (1–3 days)
-  { id: 2,  name: "Fresas",               quantity: 2,  categories: ["produce","fridge"],   expiresLabel: d(1),    img: "🍓", addedBy: "James", hoursAgo: 5  },
-  { id: 7,  name: "Pan de Masa Madre",     quantity: 1,  categories: ["bakery","pantry"],    expiresLabel: d(2),    img: "🍞", addedBy: "Sarah", hoursAgo: 1  },
-  { id: 8,  name: "Aguacates",             quantity: 3,  categories: ["produce","pantry"],   expiresLabel: d(3),    img: "🥑", addedBy: "James", hoursAgo: 4  },
-  { id: 9,  name: "Espinaca Baby",         quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(2),    img: "🥬", addedBy: "Me",    hoursAgo: 26 },
-  { id: 18, name: "Bananos",              quantity: 5,  categories: ["produce","pantry"],   expiresLabel: d(1),    img: "🍌", addedBy: "James", hoursAgo: 6  },
-  // Fresh
-  { id: 3,  name: "Huevos de Campo",       quantity: 12, categories: ["dairy","fridge"],     expiresLabel: d(5),    img: "🥚", addedBy: "Sarah", hoursAgo: 2  },
-  { id: 4,  name: "Café Molido",           quantity: 1,  categories: ["beverages","pantry"], expiresLabel: d(90),   img: "☕", addedBy: "David", hoursAgo: 26 },
-  { id: 10, name: "Queso Cheddar",         quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(7),    img: "🧀", addedBy: "David", hoursAgo: 48 },
-  { id: 11, name: "Pechuga de Pollo",      quantity: 2,  categories: ["meat","fridge"],      expiresLabel: d(5),    img: "🥩", addedBy: "James", hoursAgo: 10 },
-  { id: 12, name: "Jugo de Naranja",       quantity: 1,  categories: ["beverages","fridge"], expiresLabel: d(12),   img: "🍊", addedBy: "Sarah", hoursAgo: 7  },
-  { id: 13, name: "Mantequilla",           quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(25),   img: "🧈", addedBy: "David", hoursAgo: 48 },
-  { id: 14, name: "Arvejas Congeladas",    quantity: 2,  categories: ["frozen"],             expiresLabel: d(120),  img: "🧊", addedBy: "Sarah", hoursAgo: 72 },
-  { id: 15, name: "Manzanas",             quantity: 4,  categories: ["produce","fridge"],   expiresLabel: d(14),   img: "🍎", addedBy: "James", hoursAgo: 12 },
-  { id: 16, name: "Zanahorias",           quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(10),   img: "🥕", addedBy: "Me",    hoursAgo: 20 },
-  { id: 17, name: "Salsa de Tomate",       quantity: 2,  categories: ["other","pantry"],     expiresLabel: d(120),  img: "🍅", addedBy: "David", hoursAgo: 96 },
-  // Expired
-  { id: 6,  name: "Yogur Griego",          quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(-1),   img: "🫙", addedBy: "Me",    hoursAgo: 5  },
-  { id: 19, name: "Tomates Cherry",        quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(-2),   img: "🍅", addedBy: "Sarah", hoursAgo: 72 },
-  { id: 20, name: "Crema de Leche",        quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(-1),   img: "🫙", addedBy: "David", hoursAgo: 48 },
-  { id: 21, name: "Jamón de Pierna",       quantity: 1,  categories: ["meat","fridge"],      expiresLabel: d(-3),   img: "🍖", addedBy: "James", hoursAgo: 96 },
-  { id: 22, name: "Champiñones",           quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(-1),   img: "🍄", addedBy: "Me",    hoursAgo: 36 },
+  // Fresh (vigentes)
+  { id: 1,  name: "Huevos de Campo",       quantity: 12, categories: ["dairy","fridge"],     expiresLabel: d(12),   img: "🥚", addedBy: "Sarah", hoursAgo: 2  },
+  { id: 2,  name: "Café Molido",            quantity: 1,  categories: ["beverages","pantry"], expiresLabel: d(90),   img: "☕", addedBy: "David", hoursAgo: 26 },
+  { id: 3,  name: "Queso Cheddar",          quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(14),   img: "🧀", addedBy: "David", hoursAgo: 48 },
+  { id: 4,  name: "Pechuga de Pollo",       quantity: 2,  categories: ["meat","fridge"],      expiresLabel: d(5),    img: "🥩", addedBy: "James", hoursAgo: 10 },
+  { id: 5,  name: "Jugo de Naranja",        quantity: 1,  categories: ["beverages","fridge"], expiresLabel: d(8),    img: "🍊", addedBy: "Sarah", hoursAgo: 7  },
+  { id: 6,  name: "Mantequilla",            quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(30),   img: "🧈", addedBy: "David", hoursAgo: 48 },
+  { id: 7,  name: "Arvejas Congeladas",     quantity: 2,  categories: ["frozen"],             expiresLabel: d(120),  img: "🧊", addedBy: "Sarah", hoursAgo: 72 },
+  { id: 8,  name: "Manzanas",              quantity: 6,  categories: ["produce","fridge"],   expiresLabel: d(18),   img: "🍎", addedBy: "James", hoursAgo: 12 },
+  { id: 9,  name: "Zanahorias",            quantity: 4,  categories: ["produce","fridge"],   expiresLabel: d(10),   img: "🥕", addedBy: "Me",    hoursAgo: 20 },
+  { id: 10, name: "Salsa de Tomate",        quantity: 2,  categories: ["other","pantry"],     expiresLabel: d(180),  img: "🍅", addedBy: "David", hoursAgo: 96 },
+  { id: 11, name: "Arroz Integral",         quantity: 1,  categories: ["other","pantry"],     expiresLabel: d(365),  img: "🌾", addedBy: "Me",    hoursAgo: 48 },
+  { id: 12, name: "Leche Entera",           quantity: 2,  categories: ["dairy","fridge"],     expiresLabel: d(6),    img: "🥛", addedBy: "Sarah", hoursAgo: 3  },
+  { id: 13, name: "Pollo Entero",           quantity: 1,  categories: ["meat","frozen"],      expiresLabel: d(45),   img: "🍗", addedBy: "James", hoursAgo: 24 },
+  { id: 14, name: "Pasta Integral",         quantity: 3,  categories: ["other","pantry"],     expiresLabel: d(200),  img: "🍝", addedBy: "David", hoursAgo: 72 },
+  // En peligro / Warning (1–3 días)
+  { id: 15, name: "Fresas",               quantity: 2,  categories: ["produce","fridge"],   expiresLabel: d(1),    img: "🍓", addedBy: "James", hoursAgo: 5  },
+  { id: 16, name: "Aguacates",             quantity: 3,  categories: ["produce","pantry"],   expiresLabel: d(2),    img: "🥑", addedBy: "James", hoursAgo: 4  },
+  { id: 17, name: "Espinaca Baby",         quantity: 1,  categories: ["produce","fridge"],   expiresLabel: d(2),    img: "🥬", addedBy: "Me",    hoursAgo: 26 },
+  { id: 18, name: "Bananos",              quantity: 4,  categories: ["produce","pantry"],   expiresLabel: d(3),    img: "🍌", addedBy: "James", hoursAgo: 6  },
+  // Vencen hoy
+  { id: 19, name: "Pan de Masa Madre",     quantity: 1,  categories: ["bakery","pantry"],    expiresLabel: todayStr, img: "🍞", addedBy: "Sarah", hoursAgo: 1  },
+  { id: 20, name: "Yogur Griego",          quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: todayStr, img: "🫙", addedBy: "Me",    hoursAgo: 5  },
+  // Vencidos
+  { id: 21, name: "Crema de Leche",        quantity: 1,  categories: ["dairy","fridge"],     expiresLabel: d(-1),   img: "🫙", addedBy: "David", hoursAgo: 48 },
+  { id: 22, name: "Jamón de Pierna",       quantity: 1,  categories: ["meat","fridge"],      expiresLabel: d(-3),   img: "🍖", addedBy: "James", hoursAgo: 96 },
 ].map(i => ({ ...i, status: computeStatus(i.expiresLabel) }));
 
 const initialShoppingList = [
@@ -95,7 +94,7 @@ const initialShoppingList = [
   { id: 7, name: "Café Molido",            quantity: 1,  categories: ["beverages","pantry"],addedBy: "IA FreshKeeper", avatar: "AI", checked: false, aiSuggested: true },
 ];
 
-const STORAGE_KEY = "freshkeeper_v3";
+const STORAGE_KEY = "freshkeeper_v4";
 function loadState() {
   try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : null; } catch { return null; }
 }
@@ -167,15 +166,44 @@ export function DataProvider({ children }) {
   const removeItem = (id) => setPantryItems(prev => prev.filter(i => i.id !== id));
 
   const consumeItem = (id, amount) => {
-    setPantryItems(prev => {
-      const item = prev.find(i => i.id === id);
-      if (item) logActivity(item, "consumed");
-      return prev.map(i => {
-        if (i.id !== id) return i;
-        const newQty = (parseInt(i.quantity) ?? 1) - amount;
-        return newQty <= 0 ? { ...i, quantity: 0, status: "consumed" } : { ...i, quantity: newQty };
+    const item = pantryItems.find(i => i.id === id);
+    if (!item) return;
+
+    const newQty = (parseInt(item.quantity) ?? 1) - amount;
+    logActivity(item, "consumed");
+
+    setPantryItems(prev => prev.map(i => {
+      if (i.id !== id) return i;
+      const qty = (parseInt(i.quantity) ?? 1) - amount;
+      return qty <= 0 ? { ...i, quantity: 0, status: "consumed" } : { ...i, quantity: qty };
+    }));
+
+    if (newQty <= 0) {
+      setShoppingList(prev => {
+        const alreadyInList = prev.some(s => s.name.toLowerCase() === item.name.toLowerCase());
+        if (alreadyInList) return prev;
+        return [...prev, {
+          id: Date.now(),
+          name: item.name,
+          quantity: 1,
+          categories: item.categories || [],
+          addedBy: "IA FreshKeeper",
+          avatar: "AI",
+          checked: false,
+          aiSuggested: true,
+        }];
       });
-    });
+      setNotifications(prev => [{
+        id: Date.now() + 1,
+        type: "shopping",
+        item: item.name,
+        msg: `Se acabó ${item.name}. Lo agregamos automáticamente a tu lista de compras.`,
+        time: "Ahora",
+        section: "today",
+        img: item.img || "🛒",
+        actioned: false,
+      }, ...prev]);
+    }
   };
 
   const toggleShoppingItem  = (id) => setShoppingList(prev => prev.map(i => i.id === id ? { ...i, checked: !i.checked } : i));
